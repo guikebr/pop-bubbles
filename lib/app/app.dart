@@ -13,6 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => GetMaterialApp(
         navigatorKey: Get.key,
         themeMode: ThemeMode.dark,
+        getPages: AppPages.routes,
         initialRoute: AppPages.initial,
         unknownRoute: AppPages.unknown,
         logWriterCallback: Logger.write,
