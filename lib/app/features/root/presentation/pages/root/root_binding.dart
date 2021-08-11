@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../../home/presentatiom/pages/home/home_controller.dart';
+import '../../../../home/presentation/pages/home/home_controller.dart';
 import 'root_controller.dart';
 
 class RootBinding extends Bindings {

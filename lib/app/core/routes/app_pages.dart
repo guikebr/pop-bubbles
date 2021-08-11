@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:pop_bubbles/app/features/game/presentation/pages/play/play_binding.dart';
-import 'package:pop_bubbles/app/features/game/presentation/pages/play/play_page.dart';
-import 'package:pop_bubbles/app/features/root/presentation/pages/root/root_binding.dart';
-import 'package:pop_bubbles/app/features/root/presentation/pages/root/root_page.dart';
-import '../../features/home/presentatiom/pages/home/home_binding.dart';
-import '../../features/home/presentatiom/pages/home/home_page.dart';
+import '../../features/game/presentation/pages/play/play_binding.dart';
+import '../../features/game/presentation/pages/play/play_page.dart';
+import '../../features/home/presentation/pages/home/home_binding.dart';
+import '../../features/home/presentation/pages/home/home_page.dart';
+import '../../features/root/presentation/pages/root/root_binding.dart';
+import '../../features/root/presentation/pages/root/root_page.dart';
 import '../../features/unknown/presentation/pages/unknown_page.dart';
 
 part 'app_routes.dart';
