@@ -119,16 +119,13 @@ abstract class ParticleBehaviour extends Behaviour {
   void paint(PaintingContext context, Offset offset) {
     final Canvas canvas = context.canvas;
     for (final Particle particle in particles!) {
-      if (particle.popping) {
+      if (particle.alpha == 0.0 || particle.popping) {
         continue;
       }
-      if (particle.alpha == 0.0) {
-        continue;
-      }
-      if (particle.color == material.Colors.transparent) {
-        _paint!.color = options.baseColor.withOpacity(particle.alpha);
+      if (options.randomColor) {
+        _paint!.color = particle.color.withOpacity(particle.alpha);
       } else {
-        _paint!.color = particle.color;
+        _paint!.color = options.baseColor.withOpacity(particle.alpha);
       }
 
       if (_particleImage != null) {
@@ -161,6 +158,8 @@ abstract class ParticleBehaviour extends Behaviour {
           p
             ..color = randomColor()
             ..popping = false;
+        } else {
+          p.popping = false;
         }
         initParticle(p);
         return p;
@@ -248,6 +247,9 @@ abstract class ParticleBehaviour extends Behaviour {
       );
 
   void _onTap(BuildContext context, Offset globalPosition) {
+    if (!options.startGame) {
+      return;
+    }
     print('reder');
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
     print(renderBox);

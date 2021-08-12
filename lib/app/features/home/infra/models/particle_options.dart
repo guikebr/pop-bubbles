@@ -24,6 +24,7 @@ class ParticleOptions {
     this.image,
     this.baseColor = Colors.black,
     this.randomColor = true,
+    this.startGame = true,
     this.spawnMinRadius = 10.0,
     this.spawnMaxRadius = 20.0,
     this.spawnMinSpeed = 50.0,
@@ -62,6 +63,9 @@ class ParticleOptions {
 
   /// The generate random colors used by the particles.
   final bool randomColor;
+
+  /// Used to enable pop
+  final bool startGame;
 
   /// The minimum radius of a spawned particle. Changing this value should cause
   /// the particles to update, in case their current radius is smaller than the
