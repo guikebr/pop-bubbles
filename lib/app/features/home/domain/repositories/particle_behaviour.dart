@@ -250,12 +250,9 @@ abstract class ParticleBehaviour extends Behaviour {
     if (!options.startGame) {
       return;
     }
-    print('reder');
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-    print(renderBox);
     if (renderBox != null) {
       final Offset localPosition = renderBox.globalToLocal(globalPosition);
-      print(localPosition);
       for (final Particle particle in particles!) {
         if ((Offset(particle.cx, particle.cy) - localPosition).distanceSquared <
             particle.radius * particle.radius * 1.2) {

@@ -30,10 +30,10 @@ class ParticleOptions {
     this.spawnMinSpeed = 50.0,
     this.spawnMaxSpeed = 80.0,
     this.spawnOpacity = 0.0,
-    this.minOpacity = 0.1,
-    this.maxOpacity = 0.4,
+    this.minOpacity = 1.0,
+    this.maxOpacity = 1.0,
     this.opacityChangeRate = 0.25,
-    this.particleCount = 10,
+    this.particleCount = 100,
   })  : assert(
           spawnMaxRadius >= spawnMinRadius,
           'spawnMaxRadius >= spawnMinRadius',

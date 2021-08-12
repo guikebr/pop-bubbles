@@ -11,7 +11,7 @@ dependencies:
   equatable: ^2.0.3
   flutter:
     sdk: flutter
-  get: ^4.3.6
+  get: ^4.3.7
 
 dev_dependencies:
   flutter_test:
@@ -19,5 +19,6 @@ dev_dependencies:
   lint: ^1.5.3
 
 flutter:
-
   uses-material-design: true
+  assets:
+    - assets/

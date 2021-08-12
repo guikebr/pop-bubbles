@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../home/domain/repositories/animated_background.dart';
 import 'play_controller.dart';
 
 class PlayPage extends GetView<PlayController> {
@@ -7,6 +10,13 @@ class PlayPage extends GetView<PlayController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return CupertinoPageScaffold(
+      backgroundColor: Theme.of(context).cardColor,
+      child: AnimatedBackground(
+        behaviour: RandomParticleBehaviour(options: controller.options),
+        vsync: controller,
+        child: Container(),
+      ),
+    );
   }
 }

@@ -1,15 +1,14 @@
 import 'package:flutter/animation.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import '../../../../../core/routes/app_pages.dart';
 import '../../../../home/infra/models/particle_options.dart';
 
 class RootController extends GetxController with SingleGetTickerProviderMixin {
-  late double scale;
-
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds: 1),
     vsync: this,
-    lowerBound: 0.6,
+    lowerBound: 0.5,
   );
 
   late final Animation<double> animatedButtonController = CurvedAnimation(
@@ -21,7 +20,6 @@ class RootController extends GetxController with SingleGetTickerProviderMixin {
     startGame: false,
     minOpacity: 0.5,
     maxOpacity: 0.8,
-    particleCount: 100,
   );
 
   @override
@@ -36,11 +34,7 @@ class RootController extends GetxController with SingleGetTickerProviderMixin {
     _controller.dispose();
   }
 
-  void tapDown(TapDownDetails details) {
-    print('oi');
-  }
-
-  void tapUp(TapUpDetails details) {
-    print('tchau');
+  void navigateGame() {
+    Get.toNamed<void>(Routes.playPage);
   }
 }
