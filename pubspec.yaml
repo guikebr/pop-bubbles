@@ -11,12 +11,38 @@ dependencies:
   equatable: ^2.0.3
   flutter:
     sdk: flutter
-  get: ^4.3.7
+  get: ^4.3.8
 
 dev_dependencies:
+  flutter_flavorizr: ^2.0.0
   flutter_test:
     sdk: flutter
   lint: ^1.5.3
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "flavor-type"
+    ios:
+  flavors:
+    dev:
+      app:
+        name: "POP BUBBLES DEV"
+      android:
+        applicationId: "dev.popbubbles.www"
+        firebase:
+          config: "firebase/dev/google-services.json"
+      ios:
+        bundleId: "dev.popbubbles.www"
+    prod:
+      app:
+        name: "POP BUBBLES"
+      android:
+        applicationId: "app.popbubbles.www"
+        firebase:
+          config: "firebase/prod/google-services.json"
+      ios:
+        bundleId: "app.popbubbles.www"
 
 flutter:
   uses-material-design: true

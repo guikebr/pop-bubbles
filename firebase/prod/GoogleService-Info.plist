@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>524736524421-a3pc688b0h4q23arn9i4dibqlg4oivma.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.524736524421-a3pc688b0h4q23arn9i4dibqlg4oivma</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAjso3_yUCKQm_rMI1TJkInk08NcV6U7CQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>524736524421</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>app.popbubbles.www</string>
+	<key>PROJECT_ID</key>
+	<string>pop-bubbles-prod</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pop-bubbles-prod.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:524736524421:ios:0eeb9ba6b4287ab6a879ec</string>
+</dict>
+</plist>
