@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pop_bubbles/app/themes/dark.dart';
-import 'package:pop_bubbles/app/themes/light.dart';
 
 import 'core/languages/translation_controller.dart';
 import 'core/routes/app_pages.dart';
 import 'core/utils/flavors.dart';
 import 'core/utils/logger.dart';
+import 'themes/dark.dart';
+import 'themes/light.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
