@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pop_bubbles/app/themes/dark.dart';
+import 'package:pop_bubbles/app/themes/light.dart';
 
 import 'core/languages/translation_controller.dart';
 import 'core/routes/app_pages.dart';
@@ -11,6 +13,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GetMaterialApp(
+        theme: light,
+        darkTheme: dark,
         navigatorKey: Get.key,
         themeMode: ThemeMode.dark,
         getPages: AppPages.routes,

@@ -7,24 +7,24 @@ class AnimatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
-      width: 200,
+      height: MediaQuery.of(context).size.height * .08,
+      width: MediaQuery.of(context).size.width * .8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        boxShadow: const <BoxShadow>[
+        boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Color(0x80000000),
             blurRadius: 12,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
+            color: Theme.of(context).colorScheme.surface.withAlpha(50),
           ),
         ],
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: <Color>[
-            Color(0xff12c2e9),
-            Color(0xffc471ed),
-            Color(0xfff64f59),
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary,
+            Theme.of(context).colorScheme.secondaryVariant,
           ],
         ),
       ),
@@ -34,15 +34,15 @@ class AnimatedButton extends StatelessWidget {
           children: <Widget>[
             Icon(
               CupertinoIcons.play_fill,
-              color: Colors.black.withOpacity(0.7),
               size: 40,
+              color: Theme.of(context).colorScheme.onSecondary.withOpacity(.5),
             ),
-            const Text(
+            Text(
               'PLAY',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onSecondary,
               ),
             ),
           ],

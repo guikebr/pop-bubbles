@@ -11,7 +11,7 @@ class PlayPage extends GetView<PlayController> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       child: AnimatedBackground(
         behaviour: RandomParticleBehaviour(options: controller.options),
         vsync: controller,

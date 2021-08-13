@@ -11,6 +11,7 @@ class RootPage extends GetView<RootController> {
   @override
   Widget build(BuildContext context) => CupertinoPageScaffold(
         child: Material(
+          color: Theme.of(context).colorScheme.background,
           child: AnimatedBackground(
             behaviour: RandomParticleBehaviour(options: controller.options),
             vsync: controller,
@@ -18,25 +19,25 @@ class RootPage extends GetView<RootController> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Column(
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
                       'BEM VINDO',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.pink,
                         fontSize: 40,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondaryVariant,
                       ),
                     ),
                     Text(
                       'THE POP BUBBLES',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.black,
                         fontSize: 25,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onBackground,
                       ),
                     ),
                   ],
