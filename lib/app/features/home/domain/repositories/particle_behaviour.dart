@@ -156,18 +156,20 @@ abstract class ParticleBehaviour extends Behaviour {
   /// the options change
   @protected
   List<Particle> generateParticles(int numParticles) {
-    return List<int>.generate(numParticles, (int i) => i).map((int i) {
+    final int randomEnemies = (numParticles * .1).toInt();
+    final int newNumParticles = numParticles + randomEnemies;
+    return List<int>.generate(newNumParticles, (int i) => i).map((int i) {
       final Particle p = Particle();
       if (options.randomColor) {
         p
           ..color = randomColor()
           ..popping = false
-          ..enemy = randomInt() > i && options.startGame;
+          ..enemy = randomEnemies > i && options.startGame;
       } else {
         p
           ..popping = false
           ..enemy = false
-          ..enemy = randomInt() > i && options.startGame;
+          ..enemy = randomEnemies > i && options.startGame;
       }
       initParticle(p);
       return p;
