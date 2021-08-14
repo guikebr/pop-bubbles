@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 final ThemeData dark = ThemeData(
-  brightness: Brightness.dark,
   colorScheme: const ColorScheme(
     primary: Color(0xff12c2e9),
     primaryVariant: Color(0xff008fb6),
@@ -16,5 +15,11 @@ final ThemeData dark = ThemeData(
     onBackground: Color(0xffffffff),
     onError: Color(0xffffffff),
     brightness: Brightness.dark,
+  ),
+  brightness: Brightness.dark,
+  fontFamily: 'Odibee Sans Regular',
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  textTheme: const TextTheme(
+    bodyText2: TextStyle(color: Colors.purple),
   ),
 );

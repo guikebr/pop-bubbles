@@ -24,7 +24,7 @@ class RootPage extends GetView<RootController> {
                       'BEM VINDO',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: MediaQuery.of(context).size.width * .2,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.secondaryVariant,
@@ -34,7 +34,7 @@ class RootPage extends GetView<RootController> {
                       'THE POP BUBBLES',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: MediaQuery.of(context).size.width * .1,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onBackground,

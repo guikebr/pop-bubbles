@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' as material;
@@ -128,6 +129,9 @@ abstract class ParticleBehaviour extends Behaviour {
         _paint!.color = options.baseColor.withOpacity(particle.alpha);
       }
 
+      _paint!.style =
+          particle.enemy ? PaintingStyle.stroke : PaintingStyle.fill;
+
       if (_particleImage != null) {
         final Rect dst = Rect.fromLTRB(
           particle.cx - particle.radius,
@@ -151,19 +155,24 @@ abstract class ParticleBehaviour extends Behaviour {
   /// This can be used to generate the initial particles or new particles when
   /// the options change
   @protected
-  List<Particle> generateParticles(int numParticles) =>
-      List<int>.generate(numParticles, (int i) => i).map((int i) {
-        final Particle p = Particle();
-        if (options.randomColor) {
-          p
-            ..color = randomColor()
-            ..popping = false;
-        } else {
-          p.popping = false;
-        }
-        initParticle(p);
-        return p;
-      }).toList();
+  List<Particle> generateParticles(int numParticles) {
+    return List<int>.generate(numParticles, (int i) => i).map((int i) {
+      final Particle p = Particle();
+      if (options.randomColor) {
+        p
+          ..color = randomColor()
+          ..popping = false
+          ..enemy = randomInt() > i && options.startGame;
+      } else {
+        p
+          ..popping = false
+          ..enemy = false
+          ..enemy = randomInt() > i && options.startGame;
+      }
+      initParticle(p);
+      return p;
+    }).toList();
+  }
 
   @protected
   void initParticle(Particle particle);
@@ -202,6 +211,9 @@ abstract class ParticleBehaviour extends Behaviour {
       particles!.addAll(newParticles);
     }
   }
+
+  /// Generate int Random
+  int randomInt() => Random().nextInt(20);
 
   /// Generates random color to be used by the rectangles
   static Color randomColor() {
@@ -248,6 +260,7 @@ abstract class ParticleBehaviour extends Behaviour {
 
   void _onTap(BuildContext context, Offset globalPosition) {
     if (!options.startGame) {
+      options = options.copyWith(randomColor: false);
       return;
     }
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
@@ -257,7 +270,6 @@ abstract class ParticleBehaviour extends Behaviour {
         if ((Offset(particle.cx, particle.cy) - localPosition).distanceSquared <
             particle.radius * particle.radius * 1.2) {
           _popParticle(particle);
-          print(particle);
           print(particle.color);
         }
       }

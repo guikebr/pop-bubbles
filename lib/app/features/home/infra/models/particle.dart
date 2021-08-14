@@ -44,6 +44,9 @@ class Particle {
   /// other information related to the particles.
   dynamic data;
 
+  /// the enemy particles
+  late bool enemy;
+
   /// The state of the particle. Is it popping?
   late bool popping;
 

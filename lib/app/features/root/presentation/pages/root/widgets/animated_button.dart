@@ -34,15 +34,17 @@ class AnimatedButton extends StatelessWidget {
           children: <Widget>[
             Icon(
               CupertinoIcons.play_fill,
-              size: 40,
+              size: MediaQuery.of(context).size.width * .1,
               color: Theme.of(context).colorScheme.onSecondary.withOpacity(.5),
             ),
             Text(
               'PLAY',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: MediaQuery.of(context).size.width * .08,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSecondary.withOpacity(.5),
               ),
             ),
           ],

@@ -12,10 +12,27 @@ class PlayPage extends GetView<PlayController> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      child: AnimatedBackground(
-        behaviour: RandomParticleBehaviour(options: controller.options),
-        vsync: controller,
-        child: Container(),
+      child: Material(
+        child: AnimatedBackground(
+          behaviour: RandomParticleBehaviour(options: controller.options),
+          vsync: controller,
+          child: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Text(
+                  '00:00:00',
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * .1,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onPrimary.withOpacity(.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

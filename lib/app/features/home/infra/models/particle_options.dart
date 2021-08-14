@@ -113,6 +113,8 @@ class ParticleOptions {
   ParticleOptions copyWith({
     Image? image = const _NotSetImage(),
     Color? baseColor,
+    bool? randomColor,
+    bool? startGame,
     double? spawnMinRadius,
     double? spawnMaxRadius,
     double? spawnMinSpeed,
@@ -126,6 +128,8 @@ class ParticleOptions {
     return ParticleOptions(
       image: image is _NotSetImage ? this.image : image,
       baseColor: baseColor ?? this.baseColor,
+      startGame: startGame ?? this.startGame,
+      randomColor: randomColor ?? this.randomColor,
       spawnMinRadius: spawnMinRadius ?? this.spawnMinRadius,
       spawnMaxRadius: spawnMaxRadius ?? this.spawnMaxRadius,
       spawnMinSpeed: spawnMinSpeed ?? this.spawnMinSpeed,
