@@ -23,7 +23,7 @@ abstract class AppPages {
     GetPage<RootPage>(
       name: Routes.rootPage,
       page: () => const RootPage(),
-      binding: RootBinding(),
+      bindings: <Bindings>[RootBinding(), PlayBinding()],
     ),
     unknown,
     GetPage<HomePage>(
@@ -34,7 +34,6 @@ abstract class AppPages {
     GetPage<PlayPage>(
       name: Routes.playPage,
       page: () => const PlayPage(),
-      binding: PlayBinding(),
     ),
   ];
 }

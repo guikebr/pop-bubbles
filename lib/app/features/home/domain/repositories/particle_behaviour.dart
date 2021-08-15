@@ -3,8 +3,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/helpers/image_helper.dart';
+import '../../../game/presentation/pages/play/play_controller.dart';
 import '../../infra/models/particle.dart';
 import '../../infra/models/particle_options.dart';
 import 'animated_background.dart';
@@ -101,6 +103,12 @@ abstract class ParticleBehaviour extends Behaviour {
 
   @override
   bool tick(double delta, Duration elapsed) {
+    if (options.startGame && !Get.find<PlayController>().gameOver) {
+      Get.find<PlayController>().duration = elapsed;
+      Get.find<PlayController>().update(<String>[
+        Get.find<PlayController>().idTimer,
+      ]);
+    }
     if (!isInitialized) {
       return false;
     }
@@ -156,7 +164,7 @@ abstract class ParticleBehaviour extends Behaviour {
   /// the options change
   @protected
   List<Particle> generateParticles(int numParticles) {
-    final int randomEnemies = (numParticles * .1).toInt();
+    final int randomEnemies = (numParticles * .2).toInt();
     final int newNumParticles = numParticles + randomEnemies;
     return List<int>.generate(newNumParticles, (int i) => i).map((int i) {
       final Particle p = Particle();
@@ -268,20 +276,31 @@ abstract class ParticleBehaviour extends Behaviour {
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       final Offset localPosition = renderBox.globalToLocal(globalPosition);
-      for (final Particle particle in particles!) {
-        if ((Offset(particle.cx, particle.cy) - localPosition).distanceSquared <
-            particle.radius * particle.radius * 1.2) {
-          _popParticle(particle);
-          print(particle.color);
-        }
+
+      final List<Particle> finders = particles!
+          .where(
+            (Particle particle) =>
+                !particle.popping &&
+                ((Offset(particle.cx, particle.cy) - localPosition)
+                        .distanceSquared <
+                    particle.radius * particle.radius * 1.2),
+          )
+          .toList();
+
+      if (finders.isNotEmpty) {
+        _popParticle(finders.first);
       }
     }
   }
 
   void _popParticle(Particle particle) {
-    particle
-      ..popping = true
-      ..radius = 0.2 * particle.targetAlpha
-      ..targetAlpha *= 0.5;
+    if (particle.enemy) {
+      Get.find<PlayController>().enemyTap();
+    } else {
+      particle
+        ..popping = true
+        ..radius = 0.2 * particle.targetAlpha
+        ..targetAlpha *= 0.5;
+    }
   }
 }
