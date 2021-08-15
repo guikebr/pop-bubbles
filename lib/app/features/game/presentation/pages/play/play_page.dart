@@ -46,18 +46,21 @@ class PlayPage extends GetView<PlayController> {
                         Expanded(
                           child: GetBuilder<PlayController>(
                             id: get.idTimer,
-                            builder: (PlayController getX) => Text(
-                              get.getDuration(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(
-                                      context,
-                                    ).size.width *
-                                    .1,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSecondary.withOpacity(.8),
+                            builder: (PlayController getX) => GestureDetector(
+                              onTap: getX.restartGame,
+                              child: Text(
+                                get.getDuration(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(
+                                        context,
+                                      ).size.width *
+                                      .1,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSecondary.withOpacity(.8),
+                                ),
                               ),
                             ),
                           ),

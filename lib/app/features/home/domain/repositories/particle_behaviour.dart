@@ -302,5 +302,13 @@ abstract class ParticleBehaviour extends Behaviour {
         ..radius = 0.2 * particle.targetAlpha
         ..targetAlpha *= 0.5;
     }
+
+    final List<Particle> endGame = particles!
+        .where((Particle particle) => !particle.popping && !particle.enemy)
+        .toList();
+
+    if (endGame.isEmpty) {
+      options = options.copyWith(startGame: false);
+    }
   }
 }

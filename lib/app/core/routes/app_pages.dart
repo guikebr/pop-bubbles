@@ -34,6 +34,7 @@ abstract class AppPages {
     GetPage<PlayPage>(
       name: Routes.playPage,
       page: () => const PlayPage(),
+      binding: PlayBinding(),
     ),
   ];
 }

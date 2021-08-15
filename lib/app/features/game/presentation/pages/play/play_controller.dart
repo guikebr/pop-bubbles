@@ -21,9 +21,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     return '$_minutes : $_seconds';
   }
 
-  void restartGame() {
-    options = options.copyWith();
-  }
+  void restartGame() => options = options.copyWith();
 
   void enemyTap() {
     countLife--;
