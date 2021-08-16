@@ -16,7 +16,6 @@ class App extends StatelessWidget {
         theme: light,
         darkTheme: dark,
         navigatorKey: Get.key,
-        themeMode: ThemeMode.dark,
         getPages: AppPages.routes,
         initialRoute: AppPages.initial,
         unknownRoute: AppPages.unknown,

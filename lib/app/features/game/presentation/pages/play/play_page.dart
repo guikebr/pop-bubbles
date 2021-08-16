@@ -9,53 +9,68 @@ class PlayPage extends GetView<PlayController> {
   const PlayPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      child: Material(
-        child: GetBuilder<PlayController>(
-          init: controller,
-          id: controller.idGame,
-          builder: (PlayController get) => AnimatedBackground(
-            behaviour: RandomParticleBehaviour(options: get.options),
-            vsync: get,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height * .12,
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary.withOpacity(.8),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 38),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: GetBuilder<PlayController>(
-                            id: get.idLife,
-                            builder: (PlayController getX) => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: getX.lives
-                                  .map((bool e) => Image.asset(e
-                                      ? 'assets/heart_fill.png'
-                                      : 'assets/heart_stroke.png'))
-                                  .toList(),
+  Widget build(BuildContext context) => CupertinoPageScaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        child: Material(
+          child: GetBuilder<PlayController>(
+            init: controller,
+            id: controller.idGame,
+            builder: (PlayController get) => AnimatedBackground(
+              behaviour: RandomParticleBehaviour(options: get.options),
+              vsync: get,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height * .12,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onPrimary.withOpacity(.8),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 38),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: GetBuilder<PlayController>(
+                              id: get.idLife,
+                              builder: (PlayController getX) => Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: getX.lives
+                                    .map((bool e) => Image.asset(e
+                                        ? 'assets/heart_fill.png'
+                                        : 'assets/heart_stroke.png'))
+                                    .toList(),
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: GetBuilder<PlayController>(
-                            id: get.idTimer,
-                            builder: (PlayController getX) => GestureDetector(
-                              onTap: getX.restartGame,
-                              child: Text(
-                                get.getDuration(),
+                          Expanded(
+                            child: GetBuilder<PlayController>(
+                              id: get.idTimer,
+                              builder: (PlayController getX) => GestureDetector(
+                                onTap: getX.restartGame,
+                                child: Text(
+                                  get.getDuration(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: Get.size.width * .08,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSecondary.withOpacity(.8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GetBuilder<PlayController>(
+                              init: get,
+                              id: get.idPoint,
+                              builder: (PlayController getX) => Text(
+                                getX.getPoint(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: MediaQuery.of(
-                                        context,
-                                      ).size.width *
-                                      .1,
+                                  fontSize: Get.size.width * .08,
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(
                                     context,
@@ -64,16 +79,14 @@ class PlayPage extends GetView<PlayController> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'keys_languages.dart';
 import 'locales/en_us.dart';
+import 'locales/es_es.dart';
 import 'locales/pt_br.dart';
 
 class TranslationController extends Translations {
@@ -13,5 +14,6 @@ class TranslationController extends Translations {
   Map<String, Map<String, String>> get keys => <String, Map<String, String>>{
         KeysLanguages.enUS: enUs,
         KeysLanguages.ptBR: ptBr,
+        KeysLanguages.esES: esES,
       };
 }

@@ -2,11 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../../domain/repositories/animated_background.dart';
-import '../../../domain/repositories/behaviour.dart';
-import '../../../domain/repositories/particle_behaviour.dart';
-import '../../../infra/models/particle.dart';
-import '../../../infra/models/particle_options.dart';
+import '../../infra/models/particle.dart';
+import '../../infra/models/particle_options.dart';
+import 'animated_background.dart';
+import 'behaviour.dart';
+import 'particle_behaviour.dart';
 
 /// Renders particles that move in a
 /// predetermined direction on the [AnimatedBackground].

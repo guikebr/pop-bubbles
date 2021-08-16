@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../../core/languages/key_translations.dart';
 import '../../../../home/domain/repositories/animated_background.dart';
 import 'root_controller.dart';
 import 'widgets/animated_button.dart';
@@ -21,7 +23,7 @@ class RootPage extends GetView<RootController> {
                 Column(
                   children: <Widget>[
                     Text(
-                      'BEM VINDO',
+                      KeysTranslation.textWelcome.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * .2,
@@ -31,7 +33,7 @@ class RootPage extends GetView<RootController> {
                       ),
                     ),
                     Text(
-                      'THE POP BUBBLES',
+                      KeysTranslation.textDescription.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * .1,

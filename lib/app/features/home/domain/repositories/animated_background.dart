@@ -6,11 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'behaviour.dart';
 import 'render_animated_background.dart';
 
-export '../../presentation/pages/home/bubbles.dart';
-export '../../presentation/pages/home/lines.dart';
-export '../../presentation/pages/home/random_particle_behaviour.dart';
-export '../../presentation/pages/home/rectangles.dart';
-export '../../presentation/pages/home/space.dart';
+export 'random_particle_behaviour.dart';
 
 /// A widget that renders an animated background.
 class AnimatedBackground extends RenderObjectWidget {

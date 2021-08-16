@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' as material;
@@ -165,8 +164,7 @@ abstract class ParticleBehaviour extends Behaviour {
   @protected
   List<Particle> generateParticles(int numParticles) {
     final int randomEnemies = (numParticles * .2).toInt();
-    final int newNumParticles = numParticles + randomEnemies;
-    return List<int>.generate(newNumParticles, (int i) => i).map((int i) {
+    return List<int>.generate(numParticles, (int i) => i).map((int i) {
       final Particle p = Particle();
       if (options.randomColor) {
         p
@@ -222,13 +220,9 @@ abstract class ParticleBehaviour extends Behaviour {
     }
   }
 
-  /// Generate int Random
-  int randomInt() => Random().nextInt(20);
-
   /// Generates random color to be used by the rectangles
-  static Color randomColor() {
-    return (<Color>[...material.Colors.primaries]..shuffle()).first;
-  }
+  static Color randomColor() =>
+      (<Color>[...material.Colors.primaries]..shuffle()).first;
 
   void _convertImage(Image image) {
     if (_pendingConversion != null) {
@@ -270,25 +264,19 @@ abstract class ParticleBehaviour extends Behaviour {
 
   void _onTap(BuildContext context, Offset globalPosition) {
     if (!options.startGame) {
-      options = options.copyWith(randomColor: false);
       return;
     }
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       final Offset localPosition = renderBox.globalToLocal(globalPosition);
 
-      final List<Particle> finders = particles!
-          .where(
-            (Particle particle) =>
-                !particle.popping &&
-                ((Offset(particle.cx, particle.cy) - localPosition)
-                        .distanceSquared <
-                    particle.radius * particle.radius * 1.2),
-          )
-          .toList();
-
-      if (finders.isNotEmpty) {
-        _popParticle(finders.first);
+      for (final Particle particle in particles!) {
+        if (!particle.popping &&
+            ((Offset(particle.cx, particle.cy) - localPosition)
+                    .distanceSquared <
+                particle.radius * particle.radius * 1.2)) {
+          _popParticle(particle);
+        }
       }
     }
   }
@@ -303,12 +291,24 @@ abstract class ParticleBehaviour extends Behaviour {
         ..targetAlpha *= 0.5;
     }
 
+    final List<Particle> countPopGame =
+        particles!.where((Particle particle) => particle.popping).toList();
+
+    Get.find<PlayController>().countPopBubbles = countPopGame.length;
+
+    Get.find<PlayController>().update(<String>[
+      Get.find<PlayController>().idPoint,
+    ]);
+
     final List<Particle> endGame = particles!
         .where((Particle particle) => !particle.popping && !particle.enemy)
         .toList();
 
-    if (endGame.isEmpty) {
-      options = options.copyWith(startGame: false);
+    if (options.startGame && endGame.isEmpty) {
+      options = options.copyWith(
+        particleCount: 10 * Get.find<PlayController>().level,
+      );
+      Get.find<PlayController>().upgradeLevel();
     }
   }
 }
