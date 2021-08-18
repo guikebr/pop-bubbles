@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../home/domain/repositories/animated_background.dart';
+import '../../../domain/repositories/animated_background.dart';
 import 'play_controller.dart';
+
+class PlayGame extends GetxController with SingleGetTickerProviderMixin {}
 
 class PlayPage extends GetView<PlayController> {
   const PlayPage({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class PlayPage extends GetView<PlayController> {
             init: controller,
             id: controller.idGame,
             builder: (PlayController get) => AnimatedBackground(
-              behaviour: RandomParticleBehaviour(options: get.options),
+              behaviour: get.randomParticleBehaviour,
               vsync: get,
               child: Column(
                 children: <Widget>[
@@ -26,7 +28,7 @@ class PlayPage extends GetView<PlayController> {
                       context,
                     ).colorScheme.onPrimary.withOpacity(.8),
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 38),
+                      padding: EdgeInsets.only(top: Get.size.height * .04),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -46,18 +48,15 @@ class PlayPage extends GetView<PlayController> {
                           Expanded(
                             child: GetBuilder<PlayController>(
                               id: get.idTimer,
-                              builder: (PlayController getX) => GestureDetector(
-                                onTap: getX.restartGame,
-                                child: Text(
-                                  get.getDuration(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: Get.size.width * .08,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSecondary.withOpacity(.8),
-                                  ),
+                              builder: (PlayController getX) => Text(
+                                get.getDurationString(),
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontSize: Get.size.width * .08,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSecondary.withOpacity(.8),
                                 ),
                               ),
                             ),

@@ -15,7 +15,9 @@ class RandomParticleBehaviour extends ParticleBehaviour {
   RandomParticleBehaviour({
     ParticleOptions options = const ParticleOptions(),
     Paint? paint,
-  }) : super(options: options, paint: paint);
+    Function(BuildContext, Offset)? onTap,
+    Function(Duration)? duration,
+  }) : super(options: options, paint: paint, onTap: onTap, duration: duration);
 
   static math.Random random = math.Random();
 

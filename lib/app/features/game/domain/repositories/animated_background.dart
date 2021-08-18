@@ -29,10 +29,7 @@ class AnimatedBackground extends RenderObjectWidget {
 
   @override
   RenderAnimatedBackground createRenderObject(BuildContext context) =>
-      RenderAnimatedBackground(
-        vsync: vsync,
-        behaviour: behaviour,
-      );
+      RenderAnimatedBackground(vsync: vsync, behaviour: behaviour);
 
   @override
   void updateRenderObject(

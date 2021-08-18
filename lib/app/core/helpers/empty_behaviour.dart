@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../features/home/domain/repositories/animated_background.dart';
-import '../../features/home/domain/repositories/behaviour.dart';
+import '../../features/game/domain/repositories/animated_background.dart';
+import '../../features/game/domain/repositories/behaviour.dart';
 
 /// Empty Behaviour that renders nothing on an [AnimatedBackground]
 class EmptyBehaviour extends Behaviour {

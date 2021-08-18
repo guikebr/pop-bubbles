@@ -7,4 +7,6 @@ const Map<String, String> ptBr = <String, String>{
   KeysTranslation.textDescription: 'THE POP BUBBLES',
   // BUTTONS
   KeysTranslation.buttonPlay: 'JOGAR',
+  KeysTranslation.buttonCancel: 'SAIR',
+  KeysTranslation.buttonReset: 'REINICIAR O JOGO',
 };

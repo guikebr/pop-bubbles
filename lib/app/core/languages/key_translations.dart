@@ -6,4 +6,6 @@ abstract class KeysTranslation {
 
   // BUTTONS
   static const String buttonPlay = 'button_play';
+  static const String buttonCancel = 'button_cancel';
+  static const String buttonReset = 'button_reset';
 }

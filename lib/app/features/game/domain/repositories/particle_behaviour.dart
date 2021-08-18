@@ -2,10 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 
 import '../../../../core/helpers/image_helper.dart';
-import '../../../game/presentation/pages/play/play_controller.dart';
 import '../../infra/models/particle.dart';
 import '../../infra/models/particle_options.dart';
 import 'animated_background.dart';
@@ -19,9 +17,13 @@ abstract class ParticleBehaviour extends Behaviour {
   ParticleBehaviour({
     ParticleOptions options = const ParticleOptions(),
     Paint? paint,
+    Function(BuildContext, Offset)? onTap,
+    Function(Duration)? duration,
   }) {
-    _options = options;
     particlePaint = paint;
+    _options = options;
+    _onTap = onTap;
+    _duration = duration;
     if (options.image != null) {
       _convertImage(options.image!);
     }
@@ -29,7 +31,6 @@ abstract class ParticleBehaviour extends Behaviour {
 
   /// The list of particles used by the particle
   /// behaviour to hold the spawned particles.
-  @protected
   List<Particle>? particles;
 
   @override
@@ -56,6 +57,28 @@ abstract class ParticleBehaviour extends Behaviour {
     if (_paint!.strokeWidth <= 0) {
       _paint!.strokeWidth = 1.0;
     }
+  }
+
+  Function(BuildContext, Offset)? _onTap;
+
+  Function(BuildContext, Offset) get onTap => _onTap!;
+
+  set onTap(Function(BuildContext, Offset) value) {
+    if (value == _onTap) {
+      return;
+    }
+    _onTap = value;
+  }
+
+  Function(Duration)? _duration;
+
+  Function(Duration) get duration => _duration!;
+
+  set duration(Function(Duration) value) {
+    if (value == _duration) {
+      return;
+    }
+    _duration = value;
   }
 
   ParticleOptions? _options;
@@ -102,15 +125,10 @@ abstract class ParticleBehaviour extends Behaviour {
 
   @override
   bool tick(double delta, Duration elapsed) {
-    if (options.startGame && !Get.find<PlayController>().gameOver) {
-      Get.find<PlayController>().duration = elapsed;
-      Get.find<PlayController>().update(<String>[
-        Get.find<PlayController>().idTimer,
-      ]);
-    }
     if (!isInitialized) {
       return false;
     }
+    duration(elapsed);
 
     for (final Particle particle in particles!) {
       if (!size!.contains(Offset(particle.cx, particle.cy))) {
@@ -247,10 +265,10 @@ abstract class ParticleBehaviour extends Behaviour {
     Widget child,
   ) =>
       GestureDetector(
-        behavior: material.HitTestBehavior.translucent,
-        onTapDown: (TapDownDetails details) => _onTap(
+        behavior: HitTestBehavior.translucent,
+        onTapDown: (TapDownDetails onTapDown) => onTap(
           context,
-          details.globalPosition,
+          onTapDown.globalPosition,
         ),
         child: ConstrainedBox(
           // necessary to force gesture detector to cover screen
@@ -261,54 +279,4 @@ abstract class ParticleBehaviour extends Behaviour {
           child: super.builder(context, constraints, child),
         ),
       );
-
-  void _onTap(BuildContext context, Offset globalPosition) {
-    if (!options.startGame) {
-      return;
-    }
-    final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-    if (renderBox != null) {
-      final Offset localPosition = renderBox.globalToLocal(globalPosition);
-
-      for (final Particle particle in particles!) {
-        if (!particle.popping &&
-            ((Offset(particle.cx, particle.cy) - localPosition)
-                    .distanceSquared <
-                particle.radius * particle.radius * 1.2)) {
-          _popParticle(particle);
-        }
-      }
-    }
-  }
-
-  void _popParticle(Particle particle) {
-    if (particle.enemy) {
-      Get.find<PlayController>().enemyTap();
-    } else {
-      particle
-        ..popping = true
-        ..radius = 0.2 * particle.targetAlpha
-        ..targetAlpha *= 0.5;
-    }
-
-    final List<Particle> countPopGame =
-        particles!.where((Particle particle) => particle.popping).toList();
-
-    Get.find<PlayController>().countPopBubbles = countPopGame.length;
-
-    Get.find<PlayController>().update(<String>[
-      Get.find<PlayController>().idPoint,
-    ]);
-
-    final List<Particle> endGame = particles!
-        .where((Particle particle) => !particle.popping && !particle.enemy)
-        .toList();
-
-    if (options.startGame && endGame.isEmpty) {
-      options = options.copyWith(
-        particleCount: 10 * Get.find<PlayController>().level,
-      );
-      Get.find<PlayController>().upgradeLevel();
-    }
-  }
 }

@@ -7,4 +7,6 @@ const Map<String, String> esES = <String, String>{
   KeysTranslation.textDescription: 'THE POP BUBBLES',
   // BUTTONS
   KeysTranslation.buttonPlay: 'JUGAR',
+  KeysTranslation.buttonCancel: 'SALIR',
+  KeysTranslation.buttonReset: 'REINICIAR EL JUEGO',
 };

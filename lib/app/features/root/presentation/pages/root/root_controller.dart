@@ -1,8 +1,8 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+
 import '../../../../../core/routes/app_pages.dart';
-import '../../../../home/infra/models/particle_options.dart';
 
 class RootController extends GetxController with SingleGetTickerProviderMixin {
   late final AnimationController _controller = AnimationController(
@@ -14,12 +14,6 @@ class RootController extends GetxController with SingleGetTickerProviderMixin {
   late final Animation<double> animatedButtonController = CurvedAnimation(
     parent: _controller,
     curve: Curves.fastOutSlowIn,
-  );
-
-  final ParticleOptions options = const ParticleOptions(
-    startGame: false,
-    minOpacity: 0.5,
-    maxOpacity: 0.8,
   );
 
   @override
@@ -34,7 +28,9 @@ class RootController extends GetxController with SingleGetTickerProviderMixin {
     _controller.dispose();
   }
 
-  void navigateGame() {
-    Get.toNamed<void>(Routes.playPage);
-  }
+  Duration getDurationTimer(Duration duration) => duration;
+
+  void onTap(BuildContext context, Offset globalPosition) {}
+
+  void navigateGame() => Get.toNamed<void>(Routes.playPage);
 }

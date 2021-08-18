@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/languages/key_translations.dart';
-import '../../../../home/domain/repositories/animated_background.dart';
+import '../../../../game/domain/repositories/animated_background.dart';
+import '../../../../game/infra/models/particle_options.dart';
 import 'root_controller.dart';
 import 'widgets/animated_button.dart';
 
@@ -15,7 +16,15 @@ class RootPage extends GetView<RootController> {
         child: Material(
           color: Theme.of(context).colorScheme.background,
           child: AnimatedBackground(
-            behaviour: RandomParticleBehaviour(options: controller.options),
+            behaviour: RandomParticleBehaviour(
+              onTap: controller.onTap,
+              duration: controller.getDurationTimer,
+              options: const ParticleOptions(
+                startGame: false,
+                minOpacity: 0.5,
+                maxOpacity: 0.8,
+              ),
+            ),
             vsync: controller,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
