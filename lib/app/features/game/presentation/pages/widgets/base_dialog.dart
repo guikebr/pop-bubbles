@@ -175,9 +175,11 @@ class _BaseGifDialogState extends State<BaseGifDialog>
                 padding: const EdgeInsets.only(top: 16),
                 child: widget.title,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: widget.description,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: widget.description,
+                ),
               ),
               _buildButtonsBar(context)
             ],
@@ -221,53 +223,53 @@ class _BaseGifDialogState extends State<BaseGifDialog>
   }
 
   Widget _buildButtonsBar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        mainAxisAlignment: !widget.onlyOkButton
-            ? MainAxisAlignment.spaceEvenly
-            : MainAxisAlignment.center,
-        children: <Widget>[
-          if (!widget.onlyOkButton) ...<TextButton>[
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  widget.buttonCancelColor,
-                ),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(widget.buttonRadius),
-                  ),
-                ),
+    return Row(
+      mainAxisAlignment: !widget.onlyOkButton
+          ? MainAxisAlignment.spaceEvenly
+          : MainAxisAlignment.center,
+      children: <Widget>[
+        if (!widget.onlyOkButton) ...<TextButton>[
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                widget.buttonCancelColor,
               ),
-              onPressed: widget.onCancelButtonPressed,
-              child: Text(
-                widget.buttonCancelText,
-                style: const TextStyle(color: Colors.white),
-              ),
-            )
-          ],
-          if (!widget.onlyCancelButton) ...<TextButton>[
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  widget.buttonOkColor,
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(widget.buttonRadius),
                 ),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(widget.buttonRadius),
-                  ),
-                ),
-              ),
-              onPressed: widget.onOkButtonPressed,
-              child: Text(
-                widget.buttonOkText,
-                style: const TextStyle(color: Colors.white),
               ),
             ),
-          ],
+            onPressed: widget.onCancelButtonPressed,
+            child: Text(
+              widget.buttonCancelText,
+              style: const TextStyle(color: Colors.white),
+            ),
+          )
         ],
-      ),
+        if (!widget.onlyCancelButton) ...<TextButton>[
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                widget.buttonOkColor,
+              ),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(widget.buttonRadius),
+                ),
+              ),
+            ),
+            onPressed: widget.onOkButtonPressed,
+            child: Text(
+              widget.buttonOkText,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ]
+          .map((Widget e) => Expanded(
+              child: Padding(padding: const EdgeInsets.all(8), child: e)))
+          .toList(),
     );
   }
 
@@ -292,7 +294,8 @@ class _BaseGifDialogState extends State<BaseGifDialog>
         child: Material(
           type: MaterialType.card,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(widget.cornerRadius)),
+            borderRadius: BorderRadius.circular(widget.cornerRadius),
+          ),
           elevation: Theme.of(context).dialogTheme.elevation ?? 24.0,
           child: isPortrait
               ? _buildPortraitWidget(context, widget.imageWidget)

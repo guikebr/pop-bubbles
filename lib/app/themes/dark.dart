@@ -18,6 +18,7 @@ final ThemeData dark = ThemeData(
   ),
   brightness: Brightness.dark,
   fontFamily: 'Odibee Sans Regular',
+  dialogTheme: const DialogTheme(elevation: 12),
   visualDensity: VisualDensity.adaptivePlatformDensity,
   textTheme: const TextTheme(
     bodyText2: TextStyle(color: Colors.purple),

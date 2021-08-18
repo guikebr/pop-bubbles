@@ -18,5 +18,6 @@ final ThemeData light = ThemeData(
   ),
   brightness: Brightness.light,
   fontFamily: 'Odibee Sans Regular',
+  dialogTheme: const DialogTheme(elevation: 12),
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );

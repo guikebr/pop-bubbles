@@ -33,6 +33,9 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
 
   ParticleOptions get options => _options!;
 
+  String _title = '';
+  String _description = '';
+
   set options(ParticleOptions value) {
     if (value == _options) {
       return;
@@ -71,7 +74,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   String getPoint() => '$countPopBubbles/${enemies()}';
 
   Duration getDurationTimer(Duration duration) {
-    if(options.startGame) {
+    if (options.startGame) {
       _duration = duration;
       update(<String>[idTimer]);
     }
@@ -139,13 +142,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   Future<bool> restartGame() async {
     final bool? result = await Get.dialog<bool>(
       NetworkGiffyDialog(
-        image: Image.network(
-          'https://media.giphy.com/media/26AHC0kdj8IeLkmBy/giphy.gif',
-          loadingBuilder: (_, Widget widget, ImageChunkEvent? loadingProgress) {
-            return loadingProgress != null
-                ? const CupertinoActivityIndicator()
-                : widget;
-          },
+        image: Image.asset(
+          'assets/the_end.gif',
           errorBuilder: (_, Object error, StackTrace? stackTrace) => const Icon(
             CupertinoIcons.info,
           ),
@@ -155,11 +153,10 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         onCancelButtonPressed: () => Get.close(2),
         buttonOkText: KeysTranslation.buttonReset.tr,
         buttonCancelText: KeysTranslation.buttonCancel.tr,
-        title: title.Title(label: '${KeysTranslation.textLevel.tr} $level'),
-        description: Description(
-          label: '${KeysTranslation.textLevel.tr} $level',
-        ),
+        title: title.Title(label: _title),
+        description: Description(label: _description),
       ),
+      barrierDismissible: false,
     );
     return result ?? false;
   }
@@ -185,6 +182,9 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   void _popParticle(BuildContext context, Particle particle) {
     if (particle.enemy) {
       if (getGameOver()) {
+        _title = '${KeysTranslation.textLevel.tr} $level';
+        _description = '${KeysTranslation.textPoint.tr} $countPopBubbles '
+            '| ${KeysTranslation.textTimer.tr} $getDurationString()';
         options = options.copyWith(
           startGame: false,
           randomColor: false,
@@ -215,6 +215,9 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void countPopParticles() {
+    if (randomParticleBehaviour.particles == null) {
+      return;
+    }
     final List<Particle> countPopGame = randomParticleBehaviour.particles!
         .where((Particle particle) => particle.popping)
         .toList();

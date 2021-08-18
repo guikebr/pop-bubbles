@@ -1,6 +1,8 @@
 abstract class KeysTranslation {
   // TEXTS
   static const String textLevel = 'text_level';
+  static const String textTimer = 'text_timer';
+  static const String textPoint = 'text_point';
   static const String textWelcome = 'text_welcome';
   static const String textDescription = 'text_description';
 
