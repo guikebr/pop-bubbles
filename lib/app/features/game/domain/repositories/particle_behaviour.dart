@@ -78,7 +78,9 @@ abstract class ParticleBehaviour extends Behaviour {
     if (value == _duration) {
       return;
     }
-    _duration = value;
+    if(options.startGame) {
+      _duration = value;
+    }
   }
 
   ParticleOptions? _options;

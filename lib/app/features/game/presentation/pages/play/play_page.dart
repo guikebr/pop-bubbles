@@ -33,6 +33,7 @@ class PlayPage extends GetView<PlayController> {
                         children: <Widget>[
                           Expanded(
                             child: GetBuilder<PlayController>(
+                              init: get,
                               id: get.idLife,
                               builder: (PlayController getX) => Row(
                                 mainAxisAlignment:
@@ -47,9 +48,10 @@ class PlayPage extends GetView<PlayController> {
                           ),
                           Expanded(
                             child: GetBuilder<PlayController>(
+                              init: get,
                               id: get.idTimer,
                               builder: (PlayController getX) => Text(
-                                get.getDurationString(),
+                                getX.getDurationString(),
                                 textAlign: TextAlign.end,
                                 style: TextStyle(
                                   fontSize: Get.size.width * .08,
