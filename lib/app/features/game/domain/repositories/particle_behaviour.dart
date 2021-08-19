@@ -43,6 +43,9 @@ abstract class ParticleBehaviour extends Behaviour {
   @override
   bool get isInitialized => particles != null;
 
+  @override
+  bool get gameOver => options.gameOver;
+
   set particlePaint(Paint? value) {
     if (value == null) {
       _paint = Paint()
@@ -91,6 +94,7 @@ abstract class ParticleBehaviour extends Behaviour {
     if (value == _options) {
       return;
     }
+
     final ParticleOptions? oldOptions = _options;
     _options = value;
     if (_options!.image == null) {
@@ -118,10 +122,11 @@ abstract class ParticleBehaviour extends Behaviour {
   }
 
   @override
-  bool tick(double delta, Duration elapsed) {
+  bool tick(double delta, Duration elapsed, Duration timer) {
     if (!isInitialized) {
       return false;
     }
+    duration(timer);
     for (final Particle particle in particles!) {
       if (!size!.contains(Offset(particle.cx, particle.cy))) {
         initParticle(particle);
@@ -188,7 +193,6 @@ abstract class ParticleBehaviour extends Behaviour {
 
   @protected
   void updateParticle(Particle particle, double delta, Duration elapsed) {
-    duration(elapsed);
     particle
       ..cx += particle.dx * delta
       ..cy += particle.dy * delta;

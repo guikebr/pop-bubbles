@@ -17,6 +17,8 @@ class RenderAnimatedBackground extends RenderProxyBox {
   }
 
   int _lastTimeMs = 0;
+  Duration _lastDuration = Duration.zero;
+  Duration _duration = Duration.zero;
   final TickerProvider _vsync;
   late Ticker _ticker;
 
@@ -67,10 +69,16 @@ class RenderAnimatedBackground extends RenderProxyBox {
       return;
     }
 
+    _duration = elapsed - _lastDuration;
+
+    if (_behaviour.gameOver) {
+      _lastDuration = elapsed;
+    }
+
     final double delta = (elapsed.inMilliseconds - _lastTimeMs) / 1000.0;
     _lastTimeMs = elapsed.inMilliseconds;
 
-    if (_behaviour.tick(delta, elapsed)) {
+    if (_behaviour.tick(delta, elapsed, _duration)) {
       markNeedsPaint();
     }
   }
@@ -101,6 +109,7 @@ class RenderAnimatedBackground extends RenderProxyBox {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty<Behaviour>('behaviour', behaviour))
+      ..add(ObjectFlagProperty<Duration>.has('_duration', _duration))
       ..add(ObjectFlagProperty<LayoutCallback<BoxConstraints>>.has(
         'callback',
         callback,

@@ -21,8 +21,11 @@ class EmptyBehaviour extends Behaviour {
   bool get isInitialized => true;
 
   @override
+  bool get gameOver => false;
+
+  @override
   void paint(PaintingContext context, Offset offset) {}
 
   @override
-  bool tick(double delta, Duration elapsed) => false;
+  bool tick(double delta, Duration elapsed, Duration timer) => false;
 }

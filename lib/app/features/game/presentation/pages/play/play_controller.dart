@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,13 +31,13 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   late RandomParticleBehaviour randomParticleBehaviour;
   late ParticleOptions options;
   late Duration duration;
+  late Timer timer;
 
   List<Particle> get _particles => randomParticleBehaviour.particles!;
 
   @override
   void onInit() {
     super.onInit();
-    options = ParticleOptions(particleCount: 10 * level);
     initGame();
   }
 
@@ -97,7 +99,6 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     countPopBubbles = 0;
     lives = <bool>[true, true, true];
     resetParticle();
-    update(<String>[idLife, idTimer, idLevel, idPoint, idGame]);
     if (options.startGame) {
       Get.rawSnackbar(
         snackStyle: SnackStyle.GROUNDED,
@@ -169,10 +170,9 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         _title = '${KeysTranslation.textLevel.tr} $level';
         _description = '${KeysTranslation.textPoint.tr} $countPopBubbles '
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
-        resetParticle(startGame: false, randomColor: false);
+        resetParticle(startGame: false, randomColor: false, gameOver: true);
         restartGame().then((bool value) async {
           if (value) {
-            resetParticle();
             initGame();
           }
         });
@@ -189,12 +189,21 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void resetParticle({bool startGame = true, bool randomColor = true}) {
+  void resetParticle({
+    bool startGame = true,
+    bool randomColor = true,
+    bool gameOver = false,
+  }) {
+    options = ParticleOptions(particleCount: 10 * level);
     final RandomParticleBehaviour _randomParticleBehaviour =
         RandomParticleBehaviour(
       onTap: _onTap,
       duration: getDurationTimer,
-      options: options.copyWith(startGame: startGame, randomColor: randomColor),
+      options: options.copyWith(
+        startGame: startGame,
+        randomColor: randomColor,
+        gameOver: gameOver,
+      ),
     );
     randomParticleBehaviour = _randomParticleBehaviour;
     update(<String>[idLife, idTimer, idLevel, idPoint, idGame]);

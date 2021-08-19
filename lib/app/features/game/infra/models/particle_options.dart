@@ -26,6 +26,7 @@ class ParticleOptions extends Equatable {
     this.baseColor = Colors.black,
     this.randomColor = true,
     this.startGame = true,
+    this.gameOver = false,
     this.spawnMinRadius = 10.0,
     this.spawnMaxRadius = 20.0,
     this.spawnMinSpeed = 50.0,
@@ -67,6 +68,9 @@ class ParticleOptions extends Equatable {
 
   /// Used to enable pop
   final bool startGame;
+
+  /// Used to finish game
+  final bool gameOver;
 
   /// The minimum radius of a spawned particle. Changing this value should cause
   /// the particles to update, in case their current radius is smaller than the
@@ -116,6 +120,7 @@ class ParticleOptions extends Equatable {
     Color? baseColor,
     bool? randomColor,
     bool? startGame,
+    bool? gameOver,
     double? spawnMinRadius,
     double? spawnMaxRadius,
     double? spawnMinSpeed,
@@ -130,6 +135,7 @@ class ParticleOptions extends Equatable {
       image: image is _NotSetImage ? this.image : image,
       baseColor: baseColor ?? this.baseColor,
       startGame: startGame ?? this.startGame,
+      gameOver: gameOver ?? this.gameOver,
       randomColor: randomColor ?? this.randomColor,
       spawnMinRadius: spawnMinRadius ?? this.spawnMinRadius,
       spawnMaxRadius: spawnMaxRadius ?? this.spawnMaxRadius,

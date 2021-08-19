@@ -19,6 +19,9 @@ abstract class Behaviour {
   /// Gets the initialization state of this behaviour
   bool get isInitialized;
 
+  /// Gets the start game state of this behaviour
+  bool get gameOver;
+
   /// Called when this behaviour should be initialized
   ///
   /// After calling this method any call to [isInitialized] should return true.
@@ -32,7 +35,7 @@ abstract class Behaviour {
   ///
   /// The implementation must return true if there is a need to repaint and
   /// false otherwise.
-  bool tick(double delta, Duration elapsed);
+  bool tick(double delta, Duration elapsed, Duration timer);
 
   /// Called each time the [AnimatedBackground] needs to repaint.
   ///
