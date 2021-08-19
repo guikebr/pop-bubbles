@@ -174,6 +174,14 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         restartGame().then((bool value) async {
           if (value) {
             initGame();
+            if (options.startGame && Get.context != null) {
+              Get.rawSnackbar(
+                snackStyle: SnackStyle.GROUNDED,
+                duration: const Duration(seconds: 2),
+                messageText: MessageText(message: getLevel()),
+                backgroundColor: Theme.of(Get.context!).colorScheme.onPrimary,
+              );
+            }
           }
         });
       }

@@ -7,7 +7,6 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.3
-  equatable: ^2.0.3
   flutter:
     sdk: flutter
   get: ^4.3.8

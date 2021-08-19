@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../../domain/repositories/particle_behaviour.dart';
 
@@ -17,7 +16,7 @@ class _NotSetImageProvider extends ImageProvider<_NotSetImageProvider> {
 }
 
 /// Holds the particle configuration information for a [ParticleBehaviour].
-class ParticleOptions extends Equatable {
+class ParticleOptions {
   /// Creates a [ParticleOptions] given a set of preferred values.
   ///
   /// Default values are assigned for arguments that are omitted.
@@ -148,21 +147,4 @@ class ParticleOptions extends Equatable {
       particleCount: particleCount ?? this.particleCount,
     );
   }
-
-  @override
-  List<Object?> get props => <Object?>[
-        image,
-        baseColor,
-        randomColor,
-        startGame,
-        spawnMinRadius,
-        spawnMaxRadius,
-        spawnMinSpeed,
-        spawnMaxSpeed,
-        spawnOpacity,
-        minOpacity,
-        maxOpacity,
-        opacityChangeRate,
-        particleCount,
-      ];
 }
