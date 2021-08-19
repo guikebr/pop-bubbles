@@ -30,7 +30,6 @@ class RenderAnimatedBackground extends RenderProxyBox {
     assert(value != null, 'error value != null');
     final Behaviour oldBehaviour = _behaviour;
     _behaviour = value;
-
     _behaviour
       ..renderObject = this
       ..initFrom(oldBehaviour);

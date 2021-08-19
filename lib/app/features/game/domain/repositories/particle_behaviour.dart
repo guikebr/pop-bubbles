@@ -33,16 +33,15 @@ abstract class ParticleBehaviour extends Behaviour {
   /// behaviour to hold the spawned particles.
   List<Particle>? particles;
 
-  @override
-  bool get isInitialized => particles != null;
-
   Rect? _particleImageSrc;
   ui.Image? _particleImage;
   VoidCallback? _pendingConversion;
 
   Paint? _paint;
-
   Paint? get particlePaint => _paint;
+
+  @override
+  bool get isInitialized => particles != null;
 
   set particlePaint(Paint? value) {
     if (value == null) {
@@ -53,14 +52,12 @@ abstract class ParticleBehaviour extends Behaviour {
     } else {
       _paint = value;
     }
-
     if (_paint!.strokeWidth <= 0) {
       _paint!.strokeWidth = 1.0;
     }
   }
 
   Function(BuildContext, Offset)? _onTap;
-
   Function(BuildContext, Offset) get onTap => _onTap!;
 
   set onTap(Function(BuildContext, Offset) value) {
@@ -71,14 +68,13 @@ abstract class ParticleBehaviour extends Behaviour {
   }
 
   Function(Duration)? _duration;
-
   Function(Duration) get duration => _duration!;
 
   set duration(Function(Duration) value) {
     if (value == _duration) {
       return;
     }
-    if(options.startGame) {
+    if (options.startGame) {
       _duration = value;
     }
   }
@@ -97,13 +93,11 @@ abstract class ParticleBehaviour extends Behaviour {
     }
     final ParticleOptions? oldOptions = _options;
     _options = value;
-
     if (_options!.image == null) {
       _particleImage = null;
     } else if (_particleImage == null || oldOptions!.image != _options!.image) {
       _convertImage(_options!.image!);
     }
-
     onOptionsUpdate(oldOptions);
   }
 
@@ -114,13 +108,11 @@ abstract class ParticleBehaviour extends Behaviour {
   void initFrom(Behaviour oldBehaviour) {
     if (oldBehaviour is ParticleBehaviour) {
       particles = oldBehaviour.particles;
-
       // keep old image if waiting for a new one
       if (options.image != null && _particleImage == null) {
         _particleImage = oldBehaviour._particleImage;
         _particleImageSrc = oldBehaviour._particleImageSrc;
       }
-
       onOptionsUpdate(oldBehaviour.options);
     }
   }
@@ -130,14 +122,11 @@ abstract class ParticleBehaviour extends Behaviour {
     if (!isInitialized) {
       return false;
     }
-    duration(elapsed);
-
     for (final Particle particle in particles!) {
       if (!size!.contains(Offset(particle.cx, particle.cy))) {
         initParticle(particle);
         continue;
       }
-
       updateParticle(particle, delta, elapsed);
     }
     return true;
@@ -183,20 +172,12 @@ abstract class ParticleBehaviour extends Behaviour {
   /// the options change
   @protected
   List<Particle> generateParticles(int numParticles) {
-    final int randomEnemies = (numParticles * .2).toInt();
+    final int enemies = (numParticles * .2).toInt();
     return List<int>.generate(numParticles, (int i) => i).map((int i) {
-      final Particle p = Particle();
-      if (options.randomColor) {
-        p
-          ..color = randomColor()
-          ..popping = false
-          ..enemy = randomEnemies > i && options.startGame;
-      } else {
-        p
-          ..popping = false
-          ..enemy = false
-          ..enemy = randomEnemies > i && options.startGame;
-      }
+      final Particle p = Particle()
+        ..color = options.randomColor ? randomColor() : material.Colors.black
+        ..popping = false
+        ..enemy = enemies > i && options.startGame;
       initParticle(p);
       return p;
     }).toList();
@@ -207,6 +188,7 @@ abstract class ParticleBehaviour extends Behaviour {
 
   @protected
   void updateParticle(Particle particle, double delta, Duration elapsed) {
+    duration(elapsed);
     particle
       ..cx += particle.dx * delta
       ..cy += particle.dy * delta;
@@ -237,6 +219,9 @@ abstract class ParticleBehaviour extends Behaviour {
       final int particlesToSpawn = options.particleCount - particles!.length;
       final List<Particle> newParticles = generateParticles(particlesToSpawn);
       particles!.addAll(newParticles);
+    }
+    for (final Particle element in particles!) {
+      element.popping = false;
     }
   }
 

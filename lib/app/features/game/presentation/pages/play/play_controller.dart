@@ -27,11 +27,15 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   List<bool> lives = <bool>[true, true, true];
 
   late RandomParticleBehaviour randomParticleBehaviour;
+  late ParticleOptions options;
   late Duration duration;
+
+  List<Particle> get _particles => randomParticleBehaviour.particles!;
 
   @override
   void onInit() {
     super.onInit();
+    options = ParticleOptions(particleCount: 10 * level);
     initGame();
   }
 
@@ -46,19 +50,17 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     );
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    dispose();
+  Duration getDurationTimer(Duration value) {
+    if (options.startGame && !gameOver) {
+      duration = value;
+    }
+    update(<String>[idTimer]);
+    return value;
   }
-
-  Duration getDurationTimer(Duration value) => duration = value;
 
   String getLevel() => '${KeysTranslation.textLevel.tr} $level';
 
-  int enemies() =>
-      randomParticleBehaviour.options.particleCount -
-      (randomParticleBehaviour.options.particleCount * .2).toInt();
+  int enemies() => options.particleCount - (options.particleCount * .2).toInt();
 
   String getPoint() => '$countPopBubbles/${enemies()}';
 
@@ -77,7 +79,6 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     duration = Duration.zero;
     lives = <bool>[true, true, true];
     resetParticle();
-    update(<String>[idLife, idTimer, idLevel, idPoint, idGame]);
   }
 
   bool getGameOver() {
@@ -97,7 +98,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     lives = <bool>[true, true, true];
     resetParticle();
     update(<String>[idLife, idTimer, idLevel, idPoint, idGame]);
-    if (randomParticleBehaviour.options.startGame) {
+    if (options.startGame) {
       Get.rawSnackbar(
         snackStyle: SnackStyle.GROUNDED,
         duration: const Duration(seconds: 2),
@@ -130,33 +131,48 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void _onTap(BuildContext context, Offset globalPosition) {
-    if (!randomParticleBehaviour.isInitialized &&
-        !randomParticleBehaviour.options.startGame) {
+    if (!randomParticleBehaviour.isInitialized && !options.startGame) {
       return;
     }
     final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       final Offset localPosition = renderBox.globalToLocal(globalPosition);
-      for (final Particle particle in randomParticleBehaviour.particles!) {
+      for (final Particle particle in _particles) {
         if (!particle.popping &&
             ((Offset(particle.cx, particle.cy) - localPosition)
                     .distanceSquared <
                 particle.radius * particle.radius * 1.2)) {
-          _popParticle(context, particle);
+          _popParticle(particle);
         }
       }
+      upgradeLevel(context);
     }
   }
 
-  void _popParticle(BuildContext context, Particle particle) {
+  void upgradeLevel(BuildContext context) {
+    if (gameOver) {
+      return;
+    }
+    final List<bool> endGame = _particles
+        .where((Particle element) => !element.enemy)
+        .map<bool>((Particle particle) => particle.popping && !particle.enemy)
+        .toList();
+
+    if (countPopBubbles == endGame.length) {
+      updateGame(context);
+    }
+  }
+
+  void _popParticle(Particle particle) {
     if (particle.enemy) {
       if (getGameOver()) {
         _title = '${KeysTranslation.textLevel.tr} $level';
         _description = '${KeysTranslation.textPoint.tr} $countPopBubbles '
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
-        resetParticle();
-        restartGame().then((bool value) {
+        resetParticle(startGame: false, randomColor: false);
+        restartGame().then((bool value) async {
           if (value) {
+            resetParticle();
             initGame();
           }
         });
@@ -167,43 +183,20 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
           ..popping = true
           ..radius = 0.2 * particle.targetAlpha
           ..targetAlpha *= 0.5;
-        countPopParticles();
-        upgradeLevel(context);
+        countPopBubbles++;
+        update(<String>[idPoint]);
       }
     }
   }
 
-  void resetParticle() {
+  void resetParticle({bool startGame = true, bool randomColor = true}) {
     final RandomParticleBehaviour _randomParticleBehaviour =
         RandomParticleBehaviour(
       onTap: _onTap,
       duration: getDurationTimer,
-      options: ParticleOptions(
-        startGame: !gameOver,
-        randomColor: !gameOver,
-        particleCount: 10 * level,
-      ),
+      options: options.copyWith(startGame: startGame, randomColor: randomColor),
     );
     randomParticleBehaviour = _randomParticleBehaviour;
-  }
-
-  void countPopParticles() {
-    if (!randomParticleBehaviour.isInitialized) {
-      return;
-    }
-    final List<Particle> countPopGame = randomParticleBehaviour.particles!
-        .where((Particle particle) => particle.popping)
-        .toList();
-    countPopBubbles = countPopGame.length;
-    update(<String>[idPoint]);
-  }
-
-  void upgradeLevel(BuildContext context) {
-    final List<Particle> endGame = randomParticleBehaviour.particles!
-        .where((Particle particle) => !particle.popping && !particle.enemy)
-        .toList();
-    if (endGame.isEmpty) {
-      updateGame(context);
-    }
+    update(<String>[idLife, idTimer, idLevel, idPoint, idGame]);
   }
 }
