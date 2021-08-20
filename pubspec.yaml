@@ -6,6 +6,7 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
+  audioplayers: ^0.19.1
   cupertino_icons: ^1.0.3
   flutter:
     sdk: flutter
@@ -48,6 +49,9 @@ flutter:
     - assets/heart_fill.png
     - assets/heart_stroke.png
     - assets/the_end.gif
+    - assets/pop.mp3
+    - assets/stellar_wind.mp3
+    - assets/west_bad.mp3
 
   fonts:
     - family: Odibee Sans Regular
