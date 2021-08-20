@@ -16,7 +16,9 @@ class MessageText extends StatelessWidget {
         message,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * .06,
+          fontSize: MediaQuery.of(context).orientation == Orientation.portrait
+              ? MediaQuery.of(context).size.width * .06
+              : MediaQuery.of(context).size.width * .04,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.bold,
           color: Theme.of(context).colorScheme.onSecondary,

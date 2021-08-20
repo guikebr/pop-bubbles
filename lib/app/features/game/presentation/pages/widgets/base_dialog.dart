@@ -154,124 +154,130 @@ class _BaseGifDialogState extends State<BaseGifDialog>
   bool _isDefaultEntryAnimation(EntryAnimation entryAnimation) =>
       entryAnimation == EntryAnimation.base;
 
-  Widget _buildPortraitWidget(BuildContext context, Widget imageWidget) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(widget.cornerRadius),
-              topLeft: Radius.circular(widget.cornerRadius),
-            ),
-            child: imageWidget,
-          ),
-        ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: widget.title,
+  Widget _buildPortraitWidget(BuildContext context, Widget imageWidget) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(widget.cornerRadius),
+                topLeft: Radius.circular(widget.cornerRadius),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
+              child: imageWidget,
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: widget.title,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: widget.description,
+                  ),
+                ),
+                _buildButtonsBar(context)
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildLandscapeWidget(BuildContext context, Widget imageWidget) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(widget.cornerRadius),
+                bottomLeft: Radius.circular(widget.cornerRadius),
+              ),
+              child: imageWidget,
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: widget.title,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3),
                   child: widget.description,
                 ),
-              ),
-              _buildButtonsBar(context)
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLandscapeWidget(BuildContext context, Widget imageWidget) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(widget.cornerRadius),
-                bottomLeft: Radius.circular(widget.cornerRadius)),
-            child: imageWidget,
-          ),
-        ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: widget.title,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(3),
-                child: widget.description,
-              ),
-              _buildButtonsBar(context),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildButtonsBar(BuildContext context) {
-    return Row(
-      mainAxisAlignment: !widget.onlyOkButton
-          ? MainAxisAlignment.spaceEvenly
-          : MainAxisAlignment.center,
-      children: <Widget>[
-        if (!widget.onlyOkButton) ...<TextButton>[
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                widget.buttonCancelColor,
-              ),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(widget.buttonRadius),
-                ),
-              ),
-            ),
-            onPressed: widget.onCancelButtonPressed,
-            child: Text(
-              widget.buttonCancelText,
-              style: const TextStyle(color: Colors.white),
-            ),
-          )
-        ],
-        if (!widget.onlyCancelButton) ...<TextButton>[
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                widget.buttonOkColor,
-              ),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(widget.buttonRadius),
-                ),
-              ),
-            ),
-            onPressed: widget.onOkButtonPressed,
-            child: Text(
-              widget.buttonOkText,
-              style: const TextStyle(color: Colors.white),
+                _buildButtonsBar(context),
+              ],
             ),
           ),
         ],
-      ]
-          .map((Widget e) => Expanded(
-              child: Padding(padding: const EdgeInsets.all(8), child: e)))
-          .toList(),
-    );
-  }
+      );
+
+  Widget _buildButtonsBar(BuildContext context) => Row(
+        mainAxisAlignment: !widget.onlyOkButton
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.center,
+        children: <Widget>[
+          if (!widget.onlyOkButton) ...<TextButton>[
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  widget.buttonCancelColor,
+                ),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(widget.buttonRadius),
+                  ),
+                ),
+              ),
+              onPressed: widget.onCancelButtonPressed,
+              child: Text(
+                widget.buttonCancelText,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+              ),
+            )
+          ],
+          if (!widget.onlyCancelButton) ...<TextButton>[
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  widget.buttonOkColor,
+                ),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(widget.buttonRadius),
+                  ),
+                ),
+              ),
+              onPressed: widget.onOkButtonPressed,
+              child: Text(
+                widget.buttonOkText,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ]
+            .map(
+              (Widget e) => Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: e,
+                ),
+              ),
+            )
+            .toList(),
+      );
 
   @override
   Widget build(BuildContext context) {

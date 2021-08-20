@@ -7,21 +7,18 @@ class Description extends StatelessWidget {
   final String label;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Text(
+  Widget build(BuildContext context) => Text(
         label,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * .05,
+          fontSize: MediaQuery.of(context).orientation == Orientation.portrait
+              ? MediaQuery.of(context).size.width * .06
+              : MediaQuery.of(context).size.width * .03,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.bold,
           color: Theme.of(context).colorScheme.secondary,
         ),
-      ),
-    );
-  }
+      );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

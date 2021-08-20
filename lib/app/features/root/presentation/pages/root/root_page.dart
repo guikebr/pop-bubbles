@@ -26,44 +26,64 @@ class RootPage extends GetView<RootController> {
               ),
             ),
             vsync: controller,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text(
-                      KeysTranslation.textWelcome.tr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * .2,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.secondaryVariant,
+            child: OrientationBuilder(
+              builder: (BuildContext context, Orientation orientation) =>
+                  Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        KeysTranslation.textWelcome.tr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.width * .2
+                              : MediaQuery.of(context).size.height * .2,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondaryVariant,
+                        ),
                       ),
-                    ),
-                    Text(
-                      KeysTranslation.textDescription.tr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * .1,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onBackground,
+                      Text(
+                        KeysTranslation.textDescription.tr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.width * .1
+                              : MediaQuery.of(context).size.height * .1,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                GetBuilder<RootController>(
-                  init: controller,
-                  builder: (RootController get) => GestureDetector(
-                    onTap: get.navigateGame,
-                    child: ScaleTransition(
-                      scale: get.animatedButtonController,
-                      child: const AnimatedButton(),
+                    ],
+                  ),
+                  GetBuilder<RootController>(
+                    init: controller,
+                    builder: (RootController get) => GestureDetector(
+                      onTap: get.navigateGame,
+                      child: ScaleTransition(
+                        scale: get.animatedButtonController,
+                        child: AnimatedButton(
+                          widthButton: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.width * .8
+                              : MediaQuery.of(context).size.width * .8,
+                          heightButton: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.height * .1
+                              : MediaQuery.of(context).size.height * .2,
+                          sizeIcon: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.height * .08
+                              : MediaQuery.of(context).size.height * .15,
+                          sizeLabel: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.height * .06
+                              : MediaQuery.of(context).size.height * .1,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

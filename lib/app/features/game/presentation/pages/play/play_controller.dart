@@ -168,7 +168,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     if (particle.enemy) {
       if (getGameOver()) {
         _title = '${KeysTranslation.textLevel.tr} $level';
-        _description = '${KeysTranslation.textPoint.tr} $countPopBubbles '
+        _description = '${KeysTranslation.textPoint.tr} $countPopBubbles\n'
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
         resetParticle(startGame: false, randomColor: false, gameOver: true);
         restartGame().then((bool value) async {

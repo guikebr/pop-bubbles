@@ -9,16 +9,20 @@ class Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * .1,
-          fontStyle: FontStyle.normal,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primaryVariant,
+    return OrientationBuilder(
+      builder: (BuildContext context, Orientation orientation) => Padding(
+        padding: const EdgeInsets.all(8),
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).orientation == Orientation.portrait
+                ? MediaQuery.of(context).size.width * .1
+                : MediaQuery.of(context).size.width * .05,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primaryVariant,
+          ),
         ),
       ),
     );
