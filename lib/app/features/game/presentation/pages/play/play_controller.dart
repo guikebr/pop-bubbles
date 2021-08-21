@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../../../../core/languages/key_translations.dart';
 import '../../../domain/repositories/random_particle_behaviour.dart';
+import '../../../domain/use_cases/play_loop_use_case.dart';
 import '../../../infra/models/particle.dart';
 import '../../../infra/models/particle_options.dart';
 import '../widgets/description.dart';
@@ -14,6 +15,10 @@ import '../widgets/network_gif_dialog.dart';
 import '../widgets/title.dart' as title;
 
 class PlayController extends GetxController with SingleGetTickerProviderMixin {
+  PlayController({required this.playUseCase});
+
+  final PlayLoopUseCase playUseCase;
+
   String idLife = 'id_life';
   String idTimer = 'id_timer';
   String idPoint = 'id_point';
@@ -38,7 +43,14 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     super.onInit();
+    playUseCase(params: PlayParams('stellar_wind.mp3'));
     initGame();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    playUseCase.dispose();
   }
 
   @override
