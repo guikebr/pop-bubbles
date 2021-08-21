@@ -52,6 +52,7 @@ flutter:
     - assets/pop.mp3
     - assets/stellar_wind.mp3
     - assets/west_bad.mp3
+    - assets/bubble_bath.mp3
 
   fonts:
     - family: Odibee Sans Regular

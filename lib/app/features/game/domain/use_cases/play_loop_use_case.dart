@@ -3,7 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import '../../../../core/utils/use_case.dart';
 import '../repositories/play_repository.dart';
 
-class PlayLoopUseCase implements UseCase<AudioPlayer, PlayParams> {
+class PlayLoopUseCase implements UseCase<AudioPlayer, PlayLoopParams> {
   PlayLoopUseCase(this.playRepository);
 
   final PlayRepository playRepository;
@@ -11,7 +11,7 @@ class PlayLoopUseCase implements UseCase<AudioPlayer, PlayParams> {
   late AudioPlayer controller;
 
   @override
-  Future<AudioPlayer> call({required PlayParams params}) async {
+  Future<AudioPlayer> call({required PlayLoopParams params}) async {
     final Future<AudioPlayer> play = playRepository.loop(path: params.path);
     controller = await play;
     return play;
@@ -19,10 +19,13 @@ class PlayLoopUseCase implements UseCase<AudioPlayer, PlayParams> {
 
   @override
   Future<void> dispose() async => controller.dispose();
+
+  @override
+  void stop() => controller.stop();
 }
 
-class PlayParams {
-  PlayParams(this.path);
+class PlayLoopParams {
+  PlayLoopParams(this.path);
 
   final String path;
 }
