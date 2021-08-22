@@ -66,8 +66,6 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     playUseCase.dispose();
   }
 
-
-
   @override
   void onReady() {
     super.onReady();
