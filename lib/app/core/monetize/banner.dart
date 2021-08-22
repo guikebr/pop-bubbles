@@ -12,9 +12,9 @@ class Banner {
 
   static String get _unitIdPROD {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-2582031359836044/6359884166';
+      return 'ca-app-pub-2582031359836044/5267512935';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-2582031359836044/4886379768';
+      return 'ca-app-pub-2582031359836044/7494221029';
     } else {
       throw UnsupportedError('Unsupported platform');
     }
