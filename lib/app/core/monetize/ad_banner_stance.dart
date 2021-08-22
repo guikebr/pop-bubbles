@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../utils/flavors.dart';
@@ -33,14 +33,16 @@ class AdBannerStance {
   static void dispose() => _bannerAd.dispose();
 
   static Widget banner() {
-    _bannerAd = BannerAd(
+    final BannerAd bannerAd = BannerAd(
       size: AdSize.fullBanner,
       adUnitId: F.flavor == Flavor.dev ? _unitIdDEV : _unitIdPROD,
       listener: BannerAdListener(
         onAdFailedToLoad: (Ad ad, LoadAdError error) => ad.dispose(),
       ),
       request: const AdRequest(),
-    )..load();
+    );
+
+    _bannerAd = bannerAd..load();
 
     return Container(
       alignment: Alignment.center,
