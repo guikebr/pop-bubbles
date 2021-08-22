@@ -17,10 +17,7 @@ import '../widgets/network_gif_dialog.dart';
 import '../widgets/title.dart' as title;
 
 class PlayController extends GetxController with SingleGetTickerProviderMixin {
-  PlayController({
-    required this.playLoopUseCase,
-    required this.playUseCase,
-  });
+  PlayController({required this.playLoopUseCase, required this.playUseCase});
 
   final PlayLoopUseCase playLoopUseCase;
   final PlayUseCase playUseCase;
@@ -58,14 +55,6 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     super.onClose();
     playLoopUseCase.stop();
     playUseCase.stop();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    playLoopUseCase.dispose();
-    playUseCase.dispose();
-    AdBannerStance.dispose();
   }
 
   @override
@@ -216,7 +205,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
       }
     } else {
       if (!particle.popping) {
-        playUseCase(params: PlayParams('bubble_bath.mp3'));
+        playUseCase(params: PlayParams('pop.mp3'));
         particle
           ..popping = true
           ..radius = 0.2 * particle.targetAlpha

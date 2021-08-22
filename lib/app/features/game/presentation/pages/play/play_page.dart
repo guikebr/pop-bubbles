@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pop_bubbles/app/core/monetize/ad_banner_stance.dart';
-import 'package:pop_bubbles/app/core/monetize/ad_stance.dart';
 
+import '../../../../../core/monetize/ad_banner_stance.dart';
 import '../../../domain/repositories/animated_background.dart';
 import 'play_controller.dart';
 

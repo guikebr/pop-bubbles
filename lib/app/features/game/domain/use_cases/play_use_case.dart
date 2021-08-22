@@ -18,9 +18,6 @@ class PlayUseCase implements UseCase<AudioPlayer, PlayParams> {
   }
 
   @override
-  Future<void> dispose() async => controller.stop();
-
-  @override
   void stop() => controller.stop();
 }
 

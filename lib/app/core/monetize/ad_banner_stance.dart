@@ -8,8 +8,6 @@ import '../utils/flavors.dart';
 class AdBannerStance {
   const AdBannerStance._();
 
-  static late final BannerAd _bannerAd;
-
   static String get _unitIdPROD {
     if (Platform.isAndroid) {
       return 'ca-app-pub-2582031359836044/5267512935';
@@ -30,10 +28,8 @@ class AdBannerStance {
     }
   }
 
-  static void dispose() => _bannerAd.dispose();
-
   static Widget banner() {
-    final BannerAd bannerAd = BannerAd(
+    final BannerAd _bannerAd = BannerAd(
       size: AdSize.fullBanner,
       adUnitId: F.flavor == Flavor.dev ? _unitIdDEV : _unitIdPROD,
       listener: BannerAdListener(
@@ -42,7 +38,7 @@ class AdBannerStance {
       request: const AdRequest(),
     );
 
-    _bannerAd = bannerAd..load();
+    final BannerAd load = _bannerAd..load();
 
     return Container(
       alignment: Alignment.center,
@@ -52,7 +48,7 @@ class AdBannerStance {
         maxWidth: _bannerAd.size.width.toDouble(),
         minWidth: _bannerAd.size.width.toDouble(),
       ),
-      child: AdWidget(key: UniqueKey(), ad: _bannerAd),
+      child: AdWidget(key: UniqueKey(), ad: load),
     );
   }
 }
