@@ -1,7 +1,7 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class Initialization {
-  static void start() {
+class AdStance {
+  static void initialization() {
     if (MobileAds.instance == null) {
       MobileAds.instance.initialize();
     }

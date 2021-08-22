@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../utils/flavors.dart';
 
-class Banner {
-  const Banner._();
+class AdBannerStance {
+  const AdBannerStance._();
 
   static late final BannerAd _bannerAd;
 

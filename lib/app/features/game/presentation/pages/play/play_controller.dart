@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/languages/key_translations.dart';
+import '../../../../../core/monetize/ad_banner_stance.dart';
 import '../../../domain/repositories/random_particle_behaviour.dart';
 import '../../../domain/use_cases/play_loop_use_case.dart';
 import '../../../domain/use_cases/play_use_case.dart';
@@ -64,6 +65,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     super.dispose();
     playLoopUseCase.dispose();
     playUseCase.dispose();
+    AdBannerStance.dispose();
   }
 
   @override
@@ -76,6 +78,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
       backgroundColor: Theme.of(Get.overlayContext!).colorScheme.onPrimary,
     );
   }
+
+  Widget get getBanner => AdBannerStance.banner();
 
   Duration getDurationTimer(Duration value) {
     if (options.startGame && !gameOver) {
