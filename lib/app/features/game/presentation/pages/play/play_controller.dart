@@ -55,8 +55,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onClose() {
     super.onClose();
-    playLoopUseCase.dispose();
-    playUseCase.dispose();
+    playLoopUseCase.stop();
+    playUseCase.stop();
   }
 
   @override

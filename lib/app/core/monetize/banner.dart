@@ -44,7 +44,7 @@ class Banner {
 
     return Container(
       alignment: Alignment.center,
-      constraints: BoxConstraints(x
+      constraints: BoxConstraints(
         maxHeight: _bannerAd.size.height.toDouble(),
         minHeight: _bannerAd.size.height.toDouble(),
         maxWidth: _bannerAd.size.width.toDouble(),
