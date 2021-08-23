@@ -18,7 +18,10 @@ class PlayUseCase implements UseCase<AudioPlayer, PlayParams> {
   }
 
   @override
-  void stop() => controller.stop();
+  void pause() => controller.pause();
+
+  @override
+  void resume() => controller.resume();
 }
 
 class PlayParams {

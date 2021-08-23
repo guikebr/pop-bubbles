@@ -6,6 +6,9 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 
+# multiDexKeepProguard
+-keep class com.example.** { *; } # All classes in the com.example package
+
 # Firebase
 -keep class com.google.firebase.** { *; }
 

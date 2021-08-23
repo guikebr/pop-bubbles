@@ -51,8 +51,8 @@ flutter:
     - assets/heart_stroke.png
     - assets/the_end.gif
     - assets/pop.mp3
-    - assets/stellar_wind.mp3
-    - assets/west_bad.mp3
+    - assets/danzon_da_pasion.mp3
+    - assets/stomach_thumps.mp3
     - assets/bubble_bath.mp3
 
   fonts:

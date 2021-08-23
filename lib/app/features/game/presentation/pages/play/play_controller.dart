@@ -53,8 +53,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onClose() {
     super.onClose();
-    playLoopUseCase.stop();
-    playUseCase.stop();
+    playLoopUseCase.pause();
+    playUseCase.pause();
   }
 
   @override
@@ -185,6 +185,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   void _popParticle(Particle particle) {
     if (particle.enemy) {
       if (getGameOver()) {
+        playLoopUseCase.pause();
+        playUseCase(params: PlayParams('danzon_da_pasion.mp3'));
         _title = '${KeysTranslation.textLevel.tr} $level';
         _description = '${KeysTranslation.textPoint.tr} $countPopBubbles\n'
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
@@ -192,6 +194,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         restartGame().then((bool value) async {
           if (value) {
             initGame();
+            playLoopUseCase.resume();
             if (options.startGame && Get.context != null) {
               Get.rawSnackbar(
                 snackStyle: SnackStyle.GROUNDED,
@@ -202,6 +205,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
             }
           }
         });
+      } else {
+        playUseCase(params: PlayParams('stomach_thumps.mp3'));
       }
     } else {
       if (!particle.popping) {
