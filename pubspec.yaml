@@ -21,9 +21,13 @@ dev_dependencies:
   lint: ^1.6.0
 
 flutter_icons:
-  ios: true
-  android: true
-  image_path: "assets/bubbles.png"
+  #  image_path: "assets/bubbles.png"
+  ios: true # can specify file name here e.g. "My-Launcher-Icon"
+  android: true # can specify file name here e.g. "ic_launcher"
+  image_path_android: "assets/bubbles.png"
+  image_path_ios: "assets/bubbles.png"
+  adaptive_icon_background: "assets/bubbles.png" # only available for Android 8.0 devices and above
+  adaptive_icon_foreground: "assets/bubbles.png" # only available for Android 8.0 devices and above
 
 flavorizr:
   app:
