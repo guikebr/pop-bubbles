@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>962541853439-e8frqain1sjo4356uailv00ma6pdhc1q.apps.googleusercontent.com</string>
+	<string>524736524421-a3pc688b0h4q23arn9i4dibqlg4oivma.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.962541853439-e8frqain1sjo4356uailv00ma6pdhc1q</string>
+	<string>com.googleusercontent.apps.524736524421-a3pc688b0h4q23arn9i4dibqlg4oivma</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD4iCSrip1geANeth0gztvJzt6WWcnCHvE</string>
+	<string>AIzaSyAjso3_yUCKQm_rMI1TJkInk08NcV6U7CQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>962541853439</string>
+	<string>524736524421</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>dev.popbubbles.www</string>
+	<string>app.popbubbles.www</string>
 	<key>PROJECT_ID</key>
-	<string>pop-bubbles-dev</string>
+	<string>pop-bubbles-prod</string>
 	<key>STORAGE_BUCKET</key>
-	<string>pop-bubbles-dev.appspot.com</string>
+	<string>pop-bubbles-prod.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:962541853439:ios:ae6a88fb4d5df49b738aca</string>
+	<string>1:524736524421:ios:0eeb9ba6b4287ab6a879ec</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-2582031359836044~8086722744</string>
 </dict>
 </plist>

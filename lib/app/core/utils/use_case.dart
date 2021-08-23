@@ -4,6 +4,8 @@ abstract class UseCase<T, Params> {
   void pause();
 
   void resume();
+
+  void dispose();
 }
 
 class NoParams {}
