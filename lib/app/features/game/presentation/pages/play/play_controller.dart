@@ -125,6 +125,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     lives = <bool>[true, true, true];
     resetParticle();
     if (options.startGame) {
+      playUseCase(params: PlayParams('cartoon.mp3'));
       Get.rawSnackbar(
         snackStyle: SnackStyle.GROUNDED,
         duration: const Duration(seconds: 2),

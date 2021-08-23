@@ -24,8 +24,8 @@ flutter_icons:
   #  image_path: "assets/bubbles.png"
   ios: true # can specify file name here e.g. "My-Launcher-Icon"
   android: true # can specify file name here e.g. "ic_launcher"
-  image_path_android: "assets/bubbles.png"
   image_path_ios: "assets/bubbles.png"
+  image_path_android: "assets/bubbles.png"
   adaptive_icon_background: "assets/bubbles.png" # only available for Android 8.0 devices and above
   adaptive_icon_foreground: "assets/bubbles.png" # only available for Android 8.0 devices and above
 
@@ -61,6 +61,7 @@ flutter:
     - assets/heart_stroke.png
     - assets/the_end.gif
     - assets/pop.mp3
+    - assets/cartoon.mp3
     - assets/danzon_da_pasion.mp3
     - assets/stomach_thumps.mp3
     - assets/bubble_bath.mp3

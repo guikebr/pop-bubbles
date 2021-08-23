@@ -73,7 +73,6 @@ android {
             // Android Gradle plugin.
             shrinkResources true
             signingConfig signingConfigs.debug
-            multiDexKeepFile file('multidex-config.txt')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
