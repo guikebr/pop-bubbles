@@ -57,14 +57,14 @@ flavorizr:
 flutter:
   uses-material-design: true
   assets:
-    - assets/heart_fill.png
-    - assets/heart_stroke.png
+    - assets/heart_fill.webp
+    - assets/heart_stroke.webp
     - assets/the_end.gif
-    - assets/pop.mp3
-    - assets/cartoon.mp3
-    - assets/danzon_da_pasion.mp3
-    - assets/stomach_thumps.mp3
-    - assets/bubble_bath.mp3
+    - assets/pop.aac
+    - assets/cartoon.aac
+    - assets/danzon_da_pasion.aac
+    - assets/stomach_thumps.aac
+    - assets/bubble_bath.aac
 
   fonts:
     - family: Odibee Sans Regular

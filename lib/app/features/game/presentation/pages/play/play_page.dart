@@ -49,8 +49,8 @@ class PlayPage extends GetView<PlayController> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: getX.lives
                                             .map((bool e) => Image.asset(e
-                                                ? 'assets/heart_fill.png'
-                                                : 'assets/heart_stroke.png'))
+                                                ? 'assets/heart_fill.webp'
+                                                : 'assets/heart_stroke.webp'))
                                             .toList(),
                                       ),
                                     ),

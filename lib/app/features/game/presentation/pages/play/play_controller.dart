@@ -46,7 +46,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     super.onInit();
-    playLoopUseCase(params: PlayLoopParams('bubble_bath.mp3'));
+    playLoopUseCase(params: PlayLoopParams('bubble_bath.aac'));
     initGame();
   }
 
@@ -125,7 +125,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     lives = <bool>[true, true, true];
     resetParticle();
     if (options.startGame) {
-      playUseCase(params: PlayParams('cartoon.mp3'));
+      playUseCase(params: PlayParams('cartoon.aac'));
       Get.rawSnackbar(
         snackStyle: SnackStyle.GROUNDED,
         duration: const Duration(seconds: 2),
@@ -194,7 +194,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     if (particle.enemy) {
       if (getGameOver()) {
         playLoopUseCase.pause();
-        playUseCase(params: PlayParams('danzon_da_pasion.mp3'));
+        playUseCase(params: PlayParams('danzon_da_pasion.aac'));
         _title = '${KeysTranslation.textLevel.tr} $level';
         _description = '${KeysTranslation.textPoint.tr} $countPopBubbles\n'
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
@@ -214,11 +214,11 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
           }
         });
       } else {
-        playUseCase(params: PlayParams('stomach_thumps.mp3'));
+        playUseCase(params: PlayParams('stomach_thumps.aac'));
       }
     } else {
       if (!particle.popping) {
-        playUseCase(params: PlayParams('pop.mp3'));
+        playUseCase(params: PlayParams('pop.aac'));
         particle
           ..popping = true
           ..radius = 0.2 * particle.targetAlpha
