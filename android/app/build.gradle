@@ -70,7 +70,7 @@ android {
         multiDexEnabled true
         resConfigs "en", "es", "pt"
         ndk {
-            debugSymbolLevel 'SYMBOL_TABLE'
+            debugSymbolLevel 'FULL'
         }
     }
 
@@ -86,7 +86,7 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             ndk {
-                debugSymbolLevel 'SYMBOL_TABLE'
+                debugSymbolLevel 'FULL'
             }
             multiDexEnabled true
         }
