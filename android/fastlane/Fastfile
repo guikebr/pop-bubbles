@@ -33,6 +33,10 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    upload_to_play_store(
+        version_code: "1.0.1",
+        skip_upload_images: true,
+        skip_upload_screenshots: true
+    )
   end
 end
