@@ -62,7 +62,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "dev.popbubbles.www"
+        applicationId "app.popbubbles.www"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
