@@ -26,10 +26,13 @@ class NetworkGiffyDialog extends StatelessWidget {
     required this.buttonOkText,
     required this.buttonCancelText,
     required this.description,
+    this.buttonNeutralText = '',
+    this.onNeutralButtonPressed,
     this.onlyOkButton = false,
     this.onlyCancelButton = false,
     this.buttonOkColor = Colors.green,
     this.buttonCancelColor = Colors.grey,
+    this.buttonNeutralColor = Colors.yellow,
     this.cornerRadius = 8.0,
     this.buttonRadius = 8.0,
     this.entryAnimation = EntryAnimation.base,
@@ -68,6 +71,11 @@ class NetworkGiffyDialog extends StatelessWidget {
 
   /// Text for OK button.
   ///
+  /// Default is `Neutral`.
+  final String buttonNeutralText;
+
+  /// Text for OK button.
+  ///
   /// Default is `OK`.
   final String buttonOkText;
 
@@ -75,6 +83,11 @@ class NetworkGiffyDialog extends StatelessWidget {
   ///
   /// Default is `Cancel`.
   final String buttonCancelText;
+
+  /// Color of OK button.
+  ///
+  /// Default is `Colors.yellow`.
+  final Color buttonNeutralColor;
 
   /// Color of OK button.
   ///
@@ -95,6 +108,12 @@ class NetworkGiffyDialog extends StatelessWidget {
   ///
   /// Default is 8.
   final double cornerRadius;
+
+  /// Callback function to be called on when Neutral button is pressed.
+  ///
+  /// If set to null, then the button will be disabled and by
+  /// default will resemble a flat button in the Theme's `disabledColor`.
+  final VoidCallback? onNeutralButtonPressed;
 
   /// Callback function to be called on when OK button is pressed.
   ///
@@ -131,6 +150,9 @@ class NetworkGiffyDialog extends StatelessWidget {
       onCancelButtonPressed: onCancelButtonPressed,
       buttonOkText: buttonOkText,
       entryAnimation: entryAnimation,
+      buttonNeutralColor: buttonNeutralColor,
+      buttonNeutralText: buttonNeutralText,
+      onNeutralButtonPressed: onNeutralButtonPressed,
     );
   }
 
@@ -147,6 +169,8 @@ class NetworkGiffyDialog extends StatelessWidget {
       ..add(DiagnosticsProperty<bool>('onlyOkButton', onlyOkButton))
       ..add(EnumProperty<EntryAnimation>('entryAnimation', entryAnimation))
       ..add(DiagnosticsProperty<bool>('onlyCancelButton', onlyCancelButton))
+      ..add(ColorProperty('buttonNeutralColor', buttonNeutralColor))
+      ..add(StringProperty('buttonNeutralText', buttonNeutralText))
       ..add(ObjectFlagProperty<VoidCallback>.has(
         'onOkButtonPressed',
         onOkButtonPressed,
@@ -154,6 +178,10 @@ class NetworkGiffyDialog extends StatelessWidget {
       ..add(ObjectFlagProperty<VoidCallback>.has(
         'onCancelButtonPressed',
         onCancelButtonPressed,
+      ))
+      ..add(ObjectFlagProperty<VoidCallback>.has(
+        'onNeutralButtonPressed',
+        onNeutralButtonPressed,
       ));
   }
 }

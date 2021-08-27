@@ -11,4 +11,5 @@ const Map<String, String> esES = <String, String>{
   KeysTranslation.buttonPlay: 'JUGAR',
   KeysTranslation.buttonCancel: 'SALIR',
   KeysTranslation.buttonReset: 'JUEGA DE NUEVO',
+  KeysTranslation.buttonNeutral: 'RESTAURAR VIDA',
 };

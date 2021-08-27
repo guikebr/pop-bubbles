@@ -11,4 +11,5 @@ const Map<String, String> enUs = <String, String>{
   KeysTranslation.buttonPlay: 'PLAY',
   KeysTranslation.buttonCancel: 'CLOSE',
   KeysTranslation.buttonReset: 'PLAY AGAIN',
+  KeysTranslation.buttonNeutral: 'RESTORE LIVE',
 };

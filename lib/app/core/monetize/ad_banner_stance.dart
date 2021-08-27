@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../utils/flavors.dart';
@@ -18,20 +18,10 @@ class AdBannerStance {
     }
   }
 
-  static String get _unitIdDEV {
-    if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/6300978111';
-    } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/2934735716';
-    } else {
-      throw UnsupportedError('Unsupported platform');
-    }
-  }
-
   static Widget banner() {
     final BannerAd _bannerAd = BannerAd(
-      size: AdSize.fullBanner,
-      adUnitId: F.flavor == Flavor.dev ? _unitIdDEV : _unitIdPROD,
+      size: AdSize.banner,
+      adUnitId: F.flavor == Flavor.dev ? BannerAd.testAdUnitId : _unitIdPROD,
       listener: BannerAdListener(
         onAdFailedToLoad: (Ad ad, LoadAdError error) => ad.dispose(),
       ),
@@ -52,52 +42,3 @@ class AdBannerStance {
     );
   }
 }
-
-/*
-Android
-Testar os IDs da AdMob para Android:
-
-Item
-
-ID do app/ID do bloco de anúncios
-
-ID do app da AdMob
-
-ca-app-pub-3940256099942544~4354546703
-
-Banner
-
-ca-app-pub-3940256099942544/8865242552
-
-Intersticial
-
-ca-app-pub-3940256099942544/7049598008
-
-Premiado
-
-ca-app-pub-3940256099942544/8673189370
-
-No iOS
-Testar os IDs da AdMob para iOS:
-
-Item
-
-ID do app/ID do bloco de anúncios
-
-ID do app da AdMob
-
-ca-app-pub-3940256099942544~2594085930
-
-Banner
-
-ca-app-pub-3940256099942544/4339318960
-
-Intersticial
-
-ca-app-pub-3940256099942544/3964253750
-
-Premiado
-
-ca-app-pub-3940256099942544/7552160883
-
-* */

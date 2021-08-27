@@ -11,4 +11,5 @@ const Map<String, String> ptBr = <String, String>{
   KeysTranslation.buttonPlay: 'JOGAR',
   KeysTranslation.buttonCancel: 'SAIR',
   KeysTranslation.buttonReset: 'JOGAR NOVAMENTE',
+  KeysTranslation.buttonNeutral: 'RESTAURAR VIDA',
 };

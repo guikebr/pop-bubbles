@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../core/enums/state_dialog.dart';
 import '../../../../../core/languages/key_translations.dart';
 import '../../../../../core/monetize/ad_banner_stance.dart';
+import '../../../../../core/monetize/ad_rewarded.dart';
 import '../../../domain/repositories/random_particle_behaviour.dart';
 import '../../../domain/use_cases/play_loop_use_case.dart';
 import '../../../domain/use_cases/play_use_case.dart';
@@ -135,8 +137,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  Future<bool> restartGame() async {
-    final bool? result = await Get.dialog<bool>(
+  Future<StateDialog> restartGame() async {
+    final StateDialog? result = await Get.dialog<StateDialog>(
       NetworkGiffyDialog(
         image: Image.asset(
           'assets/the_end.gif',
@@ -145,8 +147,16 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
           ),
           fit: BoxFit.cover,
         ),
-        onOkButtonPressed: () => Get.back<bool>(result: true),
-        onCancelButtonPressed: () => Get.close(2),
+        onNeutralButtonPressed: () => Get.back<StateDialog>(
+          result: StateDialog.neutral,
+        ),
+        onOkButtonPressed: () => Get.back<StateDialog>(
+          result: StateDialog.confirm,
+        ),
+        onCancelButtonPressed: () => Get.back<StateDialog>(
+          result: StateDialog.close,
+        ),
+        buttonNeutralText: KeysTranslation.buttonNeutral.tr,
         buttonOkText: KeysTranslation.buttonReset.tr,
         buttonCancelText: KeysTranslation.buttonCancel.tr,
         title: title.Title(label: _title),
@@ -154,7 +164,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
       ),
       barrierDismissible: false,
     );
-    return result ?? false;
+    return result ?? StateDialog.close;
   }
 
   void _onTap(BuildContext context, Offset globalPosition) {
@@ -199,20 +209,32 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         _description = '${KeysTranslation.textPoint.tr} $countPopBubbles\n'
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
         resetParticle(startGame: false, randomColor: false, gameOver: true);
-        restartGame().then((bool value) async {
-          if (value) {
-            initGame();
-            playLoopUseCase.resume();
-            if (options.startGame && Get.context != null) {
-              Get.rawSnackbar(
-                snackStyle: SnackStyle.GROUNDED,
-                duration: const Duration(seconds: 2),
-                messageText: MessageText(message: getLevel()),
-                backgroundColor: Theme.of(Get.context!).colorScheme.onPrimary,
-              );
+        restartGame().then(
+          (StateDialog value) async {
+            switch (value) {
+              case StateDialog.close:
+                Get.back<void>();
+                break;
+              case StateDialog.confirm:
+                initGame();
+                playLoopUseCase.resume();
+                if (options.startGame && Get.context != null) {
+                  Get.rawSnackbar(
+                    snackStyle: SnackStyle.GROUNDED,
+                    duration: const Duration(seconds: 2),
+                    messageText: MessageText(message: getLevel()),
+                    backgroundColor: Theme.of(
+                      Get.context!,
+                    ).colorScheme.onPrimary,
+                  );
+                }
+                break;
+              case StateDialog.neutral:
+                AdRewarded.rewarded();
+                break;
             }
-          }
-        });
+          },
+        );
       } else {
         playUseCase(params: PlayParams('stomach_thumps.aac'));
       }

@@ -36,37 +36,43 @@ enum EntryAnimation {
 
 class BaseGifDialog extends StatefulWidget {
   const BaseGifDialog({
-    required this.imageWidget,
     required this.title,
-    required this.onOkButtonPressed,
     required this.description,
-    required this.onlyOkButton,
-    required this.onlyCancelButton,
-    required this.buttonOkText,
-    required this.buttonCancelText,
-    required this.buttonOkColor,
-    required this.buttonCancelColor,
+    required this.imageWidget,
     required this.cornerRadius,
     required this.buttonRadius,
+    required this.onlyOkButton,
+    required this.buttonOkText,
+    required this.buttonOkColor,
     required this.entryAnimation,
+    required this.onlyCancelButton,
+    required this.buttonCancelText,
+    required this.onOkButtonPressed,
+    required this.buttonCancelColor,
+    required this.buttonNeutralText,
+    required this.buttonNeutralColor,
     required this.onCancelButtonPressed,
+    required this.onNeutralButtonPressed,
     Key? key,
   }) : super(key: key);
 
-  final Widget imageWidget;
   final Widget title;
-  final Widget description;
   final bool onlyOkButton;
-  final bool onlyCancelButton;
+  final Widget imageWidget;
+  final Widget description;
   final String buttonOkText;
-  final String buttonCancelText;
   final Color buttonOkColor;
-  final Color buttonCancelColor;
   final double buttonRadius;
   final double cornerRadius;
+  final bool onlyCancelButton;
+  final Color buttonCancelColor;
+  final String buttonCancelText;
+  final String buttonNeutralText;
+  final Color buttonNeutralColor;
+  final EntryAnimation entryAnimation;
   final VoidCallback onOkButtonPressed;
   final VoidCallback onCancelButtonPressed;
-  final EntryAnimation entryAnimation;
+  final VoidCallback? onNeutralButtonPressed;
 
   @override
   _BaseGifDialogState createState() => _BaseGifDialogState();
@@ -81,6 +87,8 @@ class BaseGifDialog extends StatefulWidget {
       ..add(ColorProperty('buttonOkColor', buttonOkColor))
       ..add(StringProperty('buttonCancelText', buttonCancelText))
       ..add(ColorProperty('buttonCancelColor', buttonCancelColor))
+      ..add(StringProperty('buttonNeutralText', buttonNeutralText))
+      ..add(ColorProperty('buttonNeutralColor', buttonNeutralColor))
       ..add(DiagnosticsProperty<bool>('onlyOkButton', onlyOkButton))
       ..add(EnumProperty<EntryAnimation>('entryAnimation', entryAnimation))
       ..add(DiagnosticsProperty<bool>('onlyCancelButton', onlyCancelButton))
@@ -91,6 +99,10 @@ class BaseGifDialog extends StatefulWidget {
       ..add(ObjectFlagProperty<VoidCallback>.has(
         'onOkButtonPressed',
         onOkButtonPressed,
+      ))
+      ..add(ObjectFlagProperty<VoidCallback?>.has(
+        'onNeutralButtonPressed',
+        onNeutralButtonPressed,
       ));
   }
 }
@@ -172,13 +184,44 @@ class _BaseGifDialogState extends State<BaseGifDialog>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(top: 8),
                   child: widget.title,
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: widget.description,
+                  ),
+                ),
+                Offstage(
+                  offstage: widget.buttonNeutralText.isEmpty,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            widget.buttonNeutralColor,
+                          ),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                widget.buttonRadius,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: widget.onNeutralButtonPressed,
+                        child: Text(
+                          widget.buttonNeutralText,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 _buildButtonsBar(context)
@@ -206,12 +249,43 @@ class _BaseGifDialogState extends State<BaseGifDialog>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(top: 8),
                   child: widget.title,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(3),
                   child: widget.description,
+                ),
+                Offstage(
+                  offstage: widget.buttonNeutralText.isEmpty,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            widget.buttonNeutralColor,
+                          ),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                widget.buttonRadius,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: widget.onNeutralButtonPressed,
+                        child: Text(
+                          widget.buttonNeutralText,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 _buildButtonsBar(context),
               ],
@@ -295,7 +369,7 @@ class _BaseGifDialogState extends State<BaseGifDialog>
                 0,
               )
             : null,
-        height: MediaQuery.of(context).size.height * 0.6,
+        height: MediaQuery.of(context).size.height * 0.7,
         width: MediaQuery.of(context).size.width * (isPortrait ? 0.8 : 0.6),
         child: Material(
           type: MaterialType.card,
