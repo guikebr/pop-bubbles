@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../utils/flavors.dart';
 
+enum StatusReward { unloaded, loaded }
+
 class AdRewarded {
   const AdRewarded._();
 
@@ -18,8 +20,8 @@ class AdRewarded {
     }
   }
 
-  static void rewarded() {
-    RewardedAd.load(
+  static Future<void> load() async {
+    await RewardedAd.load(
       adUnitId: F.flavor == Flavor.dev ? RewardedAd.testAdUnitId : _unitIdPROD,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
@@ -34,28 +36,35 @@ class AdRewarded {
       ),
     );
 
-    if (_rewardedAd == null) {
-      return;
-    }
-
-    _rewardedAd!.fullScreenContentCallback =
+    _rewardedAd?.fullScreenContentCallback =
         FullScreenContentCallback<RewardedAd>(
       onAdShowedFullScreenContent: (RewardedAd ad) =>
           print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (RewardedAd ad) {
+      onAdDismissedFullScreenContent: (RewardedAd ad) async {
         print('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
+        await ad.dispose();
       },
-      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) async {
         print('$ad onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
+        await ad.dispose();
+      },
+    );
+  }
+
+  static Future<StatusReward> rewarded() async {
+    Future<StatusReward>? status;
+
+    status = Future<StatusReward>.value(StatusReward.unloaded);
+    await _rewardedAd?.setImmersiveMode(true);
+    await _rewardedAd?.show(
+      onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
+        print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
+        status = Future<StatusReward>.value(StatusReward.loaded);
       },
     );
 
-    _rewardedAd!.setImmersiveMode(true);
-    _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
-    });
     _rewardedAd = null;
+
+    return Future<StatusReward>.value(status);
   }
 }

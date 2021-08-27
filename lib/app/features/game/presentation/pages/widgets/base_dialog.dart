@@ -216,9 +216,7 @@ class _BaseGifDialogState extends State<BaseGifDialog>
                         child: Text(
                           widget.buttonNeutralText,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.surface,
-                          ),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                     ),

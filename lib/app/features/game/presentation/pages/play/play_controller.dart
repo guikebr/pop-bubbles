@@ -41,13 +41,13 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   late RandomParticleBehaviour randomParticleBehaviour;
   late ParticleOptions options;
   late Duration duration;
-  late Timer timer;
 
   List<Particle> get _particles => randomParticleBehaviour.particles!;
 
   @override
   void onInit() {
     super.onInit();
+    AdRewarded.load();
     playLoopUseCase(params: PlayLoopParams('bubble_bath.aac'));
     initGame();
   }
@@ -216,21 +216,26 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
                 Get.back<void>();
                 break;
               case StateDialog.confirm:
-                initGame();
-                playLoopUseCase.resume();
-                if (options.startGame && Get.context != null) {
-                  Get.rawSnackbar(
-                    snackStyle: SnackStyle.GROUNDED,
-                    duration: const Duration(seconds: 2),
-                    messageText: MessageText(message: getLevel()),
-                    backgroundColor: Theme.of(
-                      Get.context!,
-                    ).colorScheme.onPrimary,
-                  );
-                }
+                resetGame();
                 break;
               case StateDialog.neutral:
-                AdRewarded.rewarded();
+                await AdRewarded.rewarded()
+                    .then((StatusReward statusReward) async {
+                  switch (statusReward) {
+                    case StatusReward.loaded:
+                      countLife = 3;
+                      options = ParticleOptions(particleCount: 10 * level);
+                      update(
+                          <String>[idLife, idTimer, idLevel, idPoint, idGame]);
+                      await AdRewarded.load();
+                      break;
+                    case StatusReward.unloaded:
+                      resetGame();
+                      break;
+                  }
+                  print('resultornado $statusReward');
+                });
+
                 break;
             }
           },
@@ -248,6 +253,22 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         countPopBubbles++;
         update(<String>[idPoint]);
       }
+    }
+  }
+
+  void resetGame() {
+    initGame();
+    playLoopUseCase.resume();
+    AdRewarded.load();
+    if (options.startGame && Get.context != null) {
+      Get.rawSnackbar(
+        snackStyle: SnackStyle.GROUNDED,
+        duration: const Duration(seconds: 2),
+        messageText: MessageText(message: getLevel()),
+        backgroundColor: Theme.of(
+          Get.context!,
+        ).colorScheme.onPrimary,
+      );
     }
   }
 
