@@ -30,11 +30,11 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   String idLevel = 'id_level';
   String idGame = 'id_game';
 
-  int level = 1;
-  int countLife = 3;
+  int _level = 1;
+  int _countLife = 3;
   String _title = '';
-  bool gameOver = false;
-  int countPopBubbles = 0;
+  bool _gameOver = false;
+  int _countPopBubbles = 0;
   String _description = '';
   List<bool> lives = <bool>[true, true, true];
 
@@ -80,18 +80,18 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   Widget get getBanner => AdBannerStance.banner();
 
   Duration getDurationTimer(Duration value) {
-    if (options.startGame && !gameOver) {
+    if (options.startGame && !_gameOver) {
       duration = value;
     }
     update(<String>[idTimer]);
     return value;
   }
 
-  String getLevel() => '${KeysTranslation.textLevel.tr} $level';
+  String getLevel() => '${KeysTranslation.textLevel.tr} $_level';
 
   int enemies() => options.particleCount - (options.particleCount * .2).toInt();
 
-  String getPoint() => '$countPopBubbles/${enemies()}';
+  String getPoint() => '$_countPopBubbles/${enemies()}';
 
   String getDurationString() {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -100,30 +100,30 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     return '$_minutes : $_seconds';
   }
 
-  void initGame() {
-    level = 1;
-    countLife = 3;
-    gameOver = false;
-    countPopBubbles = 0;
+  void initGame({int level = 1}) {
+    _level = level;
+    _countLife = 3;
+    _gameOver = false;
+    _countPopBubbles = 0;
     duration = Duration.zero;
     lives = <bool>[true, true, true];
     resetParticle();
   }
 
   bool getGameOver() {
-    countLife--;
-    lives[0] = countLife > 0;
-    lives[1] = countLife > 1;
-    lives[2] = countLife > 2;
-    gameOver = countLife == 0;
+    _countLife--;
+    lives[0] = _countLife > 0;
+    lives[1] = _countLife > 1;
+    lives[2] = _countLife > 2;
+    _gameOver = _countLife == 0;
     update(<String>[idLife]);
-    return countLife == 0;
+    return _countLife == 0;
   }
 
   void updateGame(BuildContext context) {
-    level++;
-    countLife = 3;
-    countPopBubbles = 0;
+    _level++;
+    _countLife = 3;
+    _countPopBubbles = 0;
     lives = <bool>[true, true, true];
     resetParticle();
     if (options.startGame) {
@@ -156,7 +156,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         onCancelButtonPressed: () => Get.back<StateDialog>(
           result: StateDialog.close,
         ),
-        buttonNeutralText: KeysTranslation.buttonNeutral.tr,
+        buttonNeutralText:
+            AdRewarded.hasRewardedAd ? KeysTranslation.buttonNeutral.tr : '',
         buttonOkText: KeysTranslation.buttonReset.tr,
         buttonCancelText: KeysTranslation.buttonCancel.tr,
         title: title.Title(label: _title),
@@ -187,7 +188,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void upgradeLevel(BuildContext context) {
-    if (gameOver) {
+    if (_gameOver) {
       return;
     }
     final List<bool> endGame = _particles
@@ -195,7 +196,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
         .map<bool>((Particle particle) => particle.popping && !particle.enemy)
         .toList();
 
-    if (countPopBubbles == endGame.length) {
+    if (_countPopBubbles == endGame.length) {
       updateGame(context);
     }
   }
@@ -205,8 +206,8 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
       if (getGameOver()) {
         playLoopUseCase.pause();
         playUseCase(params: PlayParams('danzon_da_pasion.aac'));
-        _title = '${KeysTranslation.textLevel.tr} $level';
-        _description = '${KeysTranslation.textPoint.tr} $countPopBubbles\n'
+        _title = '${KeysTranslation.textLevel.tr} $_level';
+        _description = '${KeysTranslation.textPoint.tr} $_countPopBubbles\n'
             '${KeysTranslation.textTimer.tr} ${getDurationString()}';
         resetParticle(startGame: false, randomColor: false, gameOver: true);
         restartGame().then(
@@ -219,23 +220,11 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
                 resetGame();
                 break;
               case StateDialog.neutral:
-                await AdRewarded.rewarded()
-                    .then((StatusReward statusReward) async {
-                  switch (statusReward) {
-                    case StatusReward.loaded:
-                      countLife = 3;
-                      options = ParticleOptions(particleCount: 10 * level);
-                      update(
-                          <String>[idLife, idTimer, idLevel, idPoint, idGame]);
-                      await AdRewarded.load();
-                      break;
-                    case StatusReward.unloaded:
-                      resetGame();
-                      break;
-                  }
-                  print('resultornado $statusReward');
-                });
-
+                if (AdRewarded.hasRewardedAd) {
+                  AdRewarded.rewarded(() => initGame(level: _level));
+                } else {
+                  resetGame();
+                }
                 break;
             }
           },
@@ -250,7 +239,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
           ..popping = true
           ..radius = 0.2 * particle.targetAlpha
           ..targetAlpha *= 0.5;
-        countPopBubbles++;
+        _countPopBubbles++;
         update(<String>[idPoint]);
       }
     }
@@ -277,7 +266,7 @@ class PlayController extends GetxController with SingleGetTickerProviderMixin {
     bool randomColor = true,
     bool gameOver = false,
   }) {
-    options = ParticleOptions(particleCount: 10 * level);
+    options = ParticleOptions(particleCount: 10 * _level);
     final RandomParticleBehaviour _randomParticleBehaviour =
         RandomParticleBehaviour(
       onTap: _onTap,

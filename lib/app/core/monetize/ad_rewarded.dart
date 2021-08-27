@@ -1,14 +1,15 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../utils/flavors.dart';
-
-enum StatusReward { unloaded, loaded }
 
 class AdRewarded {
   const AdRewarded._();
 
   static RewardedAd? _rewardedAd;
+
+  static bool get hasRewardedAd => _rewardedAd != null;
 
   static String get _unitIdPROD {
     if (Platform.isAndroid) {
@@ -25,46 +26,23 @@ class AdRewarded {
       adUnitId: F.flavor == Flavor.dev ? RewardedAd.testAdUnitId : _unitIdPROD,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (RewardedAd ad) {
-          print('$ad loaded.');
-          _rewardedAd = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          print('RewardedAd failed to load: $error');
-          _rewardedAd = null;
-        },
+        onAdLoaded: (RewardedAd ad) => _rewardedAd = ad,
+        onAdFailedToLoad: (LoadAdError error) => _rewardedAd = null,
       ),
     );
-
     _rewardedAd?.fullScreenContentCallback =
         FullScreenContentCallback<RewardedAd>(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (RewardedAd ad) async {
-        print('$ad onAdDismissedFullScreenContent.');
-        await ad.dispose();
-      },
-      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) async {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
-        await ad.dispose();
-      },
+      onAdDismissedFullScreenContent: (RewardedAd ad) => ad.dispose(),
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) =>
+          ad.dispose(),
     );
   }
 
-  static Future<StatusReward> rewarded() async {
-    Future<StatusReward>? status;
-
-    status = Future<StatusReward>.value(StatusReward.unloaded);
-    await _rewardedAd?.setImmersiveMode(true);
-    await _rewardedAd?.show(
-      onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
-        print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
-        status = Future<StatusReward>.value(StatusReward.loaded);
-      },
+  static void rewarded(VoidCallback receiveReward) {
+    _rewardedAd?.setImmersiveMode(true);
+    _rewardedAd?.show(
+      onUserEarnedReward: (RewardedAd ad, RewardItem reward) => receiveReward(),
     );
-
     _rewardedAd = null;
-
-    return Future<StatusReward>.value(status);
   }
 }
