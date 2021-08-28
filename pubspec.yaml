@@ -1,6 +1,7 @@
 name: pop_bubbles
 description: A new Flutter project.
-version: 1.0.3+4
+version: 1.0.2+3
+publish_to: 'none'
 
 environment:
   sdk: ">=2.13.0 <3.0.0"
