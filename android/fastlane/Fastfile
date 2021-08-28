@@ -34,8 +34,8 @@ platform :android do
   lane :deploy do
     gradle(task: "clean assembleRelease")
     upload_to_play_store(
-        version_code: 2,
-        version_name: '1.0.1',
+        version_code: 3,
+        version_name: '1.0.2',
         skip_upload_images: true,
         skip_upload_screenshots: true,
         aab: File.expand_path('../app/prod/release/app-prod-release.aab')
