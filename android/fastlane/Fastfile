@@ -43,7 +43,6 @@ platform :android do
     gradle(task: "clean assembleRelease")
     upload_to_play_store(
        skip_upload_images: true,
-       skip_upload_metadata: true,
        skip_upload_screenshots: true,
        aab: File.expand_path('../app/prod/release/app-prod-release.aab')
     )
