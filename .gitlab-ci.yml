@@ -1,40 +1,40 @@
-  stages:
-   - update_version
-   - build
-   - deploy
+#  stages:
+#   - update_version
+#   - build
+#   - deploy
+#
+#  variables:
+#    LC_ALL: "en_US.UTF-8"
+#    LANG: "en_US.UTF-8"
+#
+#  update_version:
+#    only:
+#      - master
+#    stage: update_version
+#    script:
+#      - ruby version.rb pop_bubbles
+#    artifacts:
+#      when: on_success
+#      expire_in: 2 days
+#      paths:
+#        - pubspec.yaml
 
-  variables:
-    LC_ALL: "en_US.UTF-8"
-    LANG: "en_US.UTF-8"
-
-  update_version:
-    only:
-      - master
-    stage: update_version
-    script:
-      - ruby version.rb pop_bubbles
-    artifacts:
-      when: on_success
-      expire_in: 2 days
-      paths:
-        - pubspec.yaml
-
-  build_android:
-     only:
-       - master
-     stage: build
-     needs: [update_version]
-     script:
-       - echo '[CI PIPELINE] Starting build_android Stage'
-       - flutter build appbundle --flavor prod
-       - echo 'Success in build appbundle'
-     artifacts:
-       when: on_success
-       paths:
-         - pubspec.lock
-         - pubspec.yaml
-         - build/app/outputs/bundle/release/app-release.aab
-       expire_in: 30 mins
+#  build_android:
+#     only:
+#       - master
+#     stage: build
+#     needs: [update_version]
+#     script:
+#       - echo '[CI PIPELINE] Starting build_android Stage'
+#       - flutter build appbundle --flavor prod
+#       - echo 'Success in build appbundle'
+#     artifacts:
+#       when: on_success
+#       paths:
+#         - pubspec.lock
+#         - pubspec.yaml
+#         - build/app/outputs/bundle/release/app-release.aab
+#       expire_in: 30 mins
 
 #  build_deploy_ios:
 #    only:
@@ -48,18 +48,18 @@
 #      - cd ios/
 #      - fastlane deploy
 
-  deploy_android:
-     only:
-       - master
-     stage: deploy
-     needs: [build_android]
-     before_script:
-       - cd android/
-     script:
-       - echo 'Deploying in Google App Store'
-       - fastlane deploy
-       - cd ..
-       - echo "Sucesso!"
+#  deploy_android:
+#     only:
+#       - master
+#     stage: deploy
+#     needs: [build_android]
+#     before_script:
+#       - cd android/
+#     script:
+#       - echo 'Deploying in Google App Store'
+#       - fastlane deploy
+#       - cd ..
+#       - echo "Sucesso!"
 
 #  deploy_ios:
 #    only:
