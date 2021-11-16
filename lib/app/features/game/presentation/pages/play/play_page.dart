@@ -31,9 +31,10 @@ class PlayPage extends GetView<PlayController> {
                             height: orientation == Orientation.portrait
                                 ? MediaQuery.of(context).size.height * .1
                                 : MediaQuery.of(context).size.height * .15,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimary.withOpacity(.8),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary
+                                .withOpacity(.8),
                             child: Padding(
                               padding: orientation == Orientation.portrait
                                   ? EdgeInsets.only(top: Get.size.height * .04)
@@ -71,9 +72,7 @@ class PlayPage extends GetView<PlayController> {
                                               ? Get.size.width * .08
                                               : Get.size.width * .05,
                                           fontWeight: FontWeight.bold,
-                                          color: Theme.of(
-                                            context,
-                                          )
+                                          color: Theme.of(context)
                                               .colorScheme
                                               .onSecondary
                                               .withOpacity(.8),
@@ -94,9 +93,7 @@ class PlayPage extends GetView<PlayController> {
                                               ? Get.size.width * .08
                                               : Get.size.width * .05,
                                           fontWeight: FontWeight.bold,
-                                          color: Theme.of(
-                                            context,
-                                          )
+                                          color: Theme.of(context)
                                               .colorScheme
                                               .onSecondary
                                               .withOpacity(.8),

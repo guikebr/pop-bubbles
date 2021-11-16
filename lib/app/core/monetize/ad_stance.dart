@@ -5,7 +5,7 @@ class AdStance {
   static void initialization() {
     WidgetsFlutterBinding.ensureInitialized();
     if (MobileAds.instance == null) {
-      MobileAds.instance.initialize();
+      //MobileAds.instance.initialize();
     }
   }
 }
